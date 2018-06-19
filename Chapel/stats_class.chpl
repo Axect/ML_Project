@@ -3,8 +3,8 @@ use Math;
 proc main() {
     var a = new STVector(int, 6);
     for i in a.D do a[i] = i; // [] and () no matter
-
     var b = new STVector(a, real(64));
+
     writeln(a);
     writeln(b);
     writeln(a + 2);
@@ -53,29 +53,29 @@ class STVector {
     // Basic Operation
     // =========================================================================
     proc add(s: numType) {
-        for i in this.D do this[i] += s;
+        forall i in this.D do this[i] += s;
     }
 
     proc sub(s: numType) {
-        for i in this.D do this[i] -= s;
+        forall i in this.D do this[i] -= s;
     }
 
     proc mul(s: numType) {
-        for i in this.D do this[i] *= s;
+        forall i in this.D do this[i] *= s;
     }
 
     proc div(s: numType) {
-        for i in this.D do this[i] /= s;
+        forall i in this.D do this[i] /= s;
     }
 
     proc pow(power: ?t) {
-        for i in this.D {
+        forall i in this.D {
             this[i] = this[i] ** power;
         }
     }
 
     proc sqrt() {
-        for i in this.D {
+        forall i in this.D {
             this[i] = Math.sqrt(this[i]): numType;
         }
     }
@@ -136,7 +136,7 @@ proc **(A: STVector(?T), s: T): STVector(T) {
 proc +(A, B: STVector(?T)): STVector(T) {
     assert(A.D == B.D, "Domain mismatch!");
     var N = new STVector(A);
-    for i in N.D {
+    forall i in N.D {
         N[i] += B[i];
     }
     return N;
@@ -145,7 +145,7 @@ proc +(A, B: STVector(?T)): STVector(T) {
 proc -(A, B: STVector(?T)): STVector(T) {
     assert(A.D == B.D, "Domain mismatch!");
     var N = new STVector(A);
-    for i in N.D {
+    forall i in N.D {
         N[i] -= B[i];
     }
 }
@@ -153,7 +153,7 @@ proc -(A, B: STVector(?T)): STVector(T) {
 proc *(A, B: STVector(?T)): STVector(T) {
     assert(A.D == B.D, "Domain mismatch!");
     var N = new STVector(A);
-    for i in N.D {
+    forall i in N.D {
         N[i] *= B[i];
     }
     return N;
@@ -162,7 +162,7 @@ proc *(A, B: STVector(?T)): STVector(T) {
 proc /(A, B: STVector(?T)): STVector(T) {
     assert(A.D == B.D, "Domain mismatch!");
     var N = new STVector(A);
-    for i in N.D {
+    forall i in N.D {
         N[i] /= B[i];
     }
     return N;
