@@ -1,16 +1,10 @@
 use Math;
 
 proc main() {
-    var a = new STVector(int, 6);
+    var a = new STVector(int, 10000000);
     for i in a.D do a[i] = i; // [] and () no matter
     var b = new STVector(a, real(64));
 
-    writeln(a);
-    writeln(b);
-    writeln(a + 2);
-    writeln(a - 2);
-    writeln(a * 2);
-    writeln(a / 2);
     writeln(a.mean());
     writeln(a.variance());
     writeln(a.std());

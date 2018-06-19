@@ -12,8 +12,7 @@ proc std[T](vec: seq[T]): float64 =
   vec.variance.sqrt
 
 proc main =
-  let a = toSeq 1..6
-  echo &"Vector: {a}"
+  let a = toSeq 1..10000000
   echo &"Mean: {a.mean}"
   echo &"Var: {a.variance}"
   echo &"Std: {a.std}"

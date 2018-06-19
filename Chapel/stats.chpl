@@ -1,8 +1,8 @@
 use Math;
 
 proc main() {
-    var a = [1,2,3,4,5,6];
-    writeln(a);
+    var a: [1 .. 10000000] int;
+    forall i in a.domain do a[i] = i;
     writeln(mean(a));
     writeln(variance(a));
     writeln(std(a));
