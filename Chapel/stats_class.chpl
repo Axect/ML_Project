@@ -45,8 +45,6 @@ class StatsArray {
     }
 }
 
-
-
 proc +(A, B: StatsArray(?t)): StatsArray(t) {
     assert(A.D == B.D);
     var N = new StatsArray(A);
