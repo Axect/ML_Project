@@ -7,6 +7,9 @@ proc main() {
     writeln();
     var b = a + a;
     writeln(b);
+
+    delete a;
+    delete b;
 }
 
 class StatsArray {
