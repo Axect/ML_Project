@@ -1,10 +1,17 @@
-pub trait Statistics {
+pub fn main() {
+    let a: Vector = (1..1000_0000+1).map(|x| x as f64).collect();
+    println!("Mean: {}", a.mean());
+    println!("Var: {}", a.var());
+    println!("Std: {}", a.std());
+}
+
+trait Statistics {
     fn mean(&self) -> f64;
     fn var(&self) -> f64;
     fn std(&self) -> f64;
 }
 
-pub type Vector = Vec<f64>;
+type Vector = Vec<f64>;
 
 impl Statistics for Vector {
     fn mean(&self) -> f64 {
