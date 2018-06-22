@@ -76,6 +76,7 @@ struct Vector {
     this.comp = this.comp.map!(t => t.sqrt).array;
   }
 
+  // TODO: What is it delegate
   void fmap_void(double delegate(double) f) {
     this.comp = this.comp.map!(t => f(t)).array;
   }
