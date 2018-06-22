@@ -4,6 +4,7 @@ void main() {
     import std.stdio : writeln;
     import std.range : iota;
     import std.array : array;
+    
     double[] a = iota(1,10_000_001).map!(x => cast(double)x).array;
     mean(a).writeln;
     var(a).writeln;
