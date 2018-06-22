@@ -1,13 +1,12 @@
 import std.stdio : writeln;
 
 void main() {
-  auto a = Vector(1, 100_001);
+  auto a = Vector(1,7);
+  a.writeln;
   a.mean.writeln;
-  auto b = Vector([1,2,3,4]);
-  b.writeln;
-  auto c = b + 1;
-  c.writeln;
-  (b + c).writeln;
+  a.var.writeln;
+  a.std.writeln;
+  a.writeln;
 }
 
 /++
@@ -17,6 +16,7 @@ struct Vector {
   import std.algorithm.iteration : sum, map;
   import std.range : iota;
   import std.array : array;
+  import std.math : sqrt;
   
   double[] comp;
 
@@ -30,10 +30,11 @@ struct Vector {
   this(double[] vec) {
     this.comp = vec;
   }
+
   // ===========================================================================
   // Basic Operator
   // ===========================================================================
-  long length() {
+  pure long length() const {
     return this.comp.length;
   }
   
@@ -56,9 +57,36 @@ struct Vector {
     auto X = cast(double)x;
     this.comp = this.comp.map!(t => t / X).array;
   }
+
+  void pow(T)(T x) {
+    auto X = cast(double)x;
+    this.comp = this.comp.map!(t => t ^^ X).array;
+  }
+
+  void sqrt() {
+    this.comp = this.comp.map!(t => t.sqrt).array;
+  }
+
   // ===========================================================================
   // Operator Overloading
   // ===========================================================================
+  /++
+    Getter
+  +/
+  double opIndex(size_t i) {
+    return this.comp[i];
+  }
+
+  /++
+    Setter
+  +/
+  void opIndexAssign(double value, size_t i) {
+    this.comp[i] = value;
+  }
+
+  /++
+    Binary Operator with Scalar
+  +/
   Vector opBinary(string op)(double rhs) {
     Vector temp = Vector(this.comp);
     switch(op) {
@@ -74,12 +102,18 @@ struct Vector {
       case "/":
         temp.div(rhs);
         break;
+      case "^^":
+        temp.pow(rhs);
+        break;
       default:
         break;
     }
     return temp;
   }
 
+  /++
+    Binary Operator with Vector
+  +/
   Vector opBinary(string op)(Vector rhs) {
     Vector temp = Vector(this.comp);
     switch(op) {
@@ -111,9 +145,22 @@ struct Vector {
   // ===========================================================================
   // Statistics Operator
   // ===========================================================================
+  pure double sum() const {
+    return comp.sum;
+  }
+  
   pure double mean() const {
-    immutable s = this.comp.sum;
-    immutable l = cast(double)this.comp.length;
-    return s / l;
+    return sum() / (cast(double)length);
+  }
+
+  double var() {
+    Vector temp = Vector(comp);
+    immutable m = mean;
+    immutable l = cast(double)length - 1;
+    return temp.comp.map!(t => (t - m)^^2).sum / l;
+  }
+
+  double std() {
+    return sqrt(var);
   }
 }
