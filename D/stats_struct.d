@@ -1,10 +1,18 @@
 import std.stdio : writeln;
 
 void main() {
-  auto a = Vector(1,10_000_001);
-  a.mean.writeln;
-  a.var.writeln;
-  a.std.writeln;
+  // auto a = Vector(1,10_000_001);
+  // a.mean.writeln;
+  // a.var.writeln;
+  // a.std.writeln;
+  auto b = Vector([1,2,3,4]);
+  b.add(1).writeln;
+  b.sub(1).writeln;
+  b.mul(2).writeln;
+  b.div(2).writeln;
+  b.pow(2).writeln;
+  b.sqrt.writeln;
+  b.fmap(x => x ^^ x).writeln;
 }
 
 /++
@@ -36,35 +44,79 @@ struct Vector {
     return this.comp.length;
   }
   
-  void add(T)(T x) {
+  // ===========================================================================
+  //    Void Functions
+  // ===========================================================================
+  void add_void(T)(T x) {
     auto X = cast(double)x;
     this.comp = this.comp.map!(t => t + X).array;
   }
 
-  void sub(T)(T x) {
+  void sub_void(T)(T x) {
     auto X = cast(double)x;
     this.comp = this.comp.map!(t => t - X).array;
   }
 
-  void mul(T)(T x) {
+  void mul_void(T)(T x) {
     auto X = cast(double)x;
     this.comp = this.comp.map!(t => t * X).array;
   }
 
-  void div(T)(T x) {
+  void div_void(T)(T x) {
     auto X = cast(double)x;
     this.comp = this.comp.map!(t => t / X).array;
   }
 
-  void pow(T)(T x) {
+  void pow_void(T)(T x) {
     auto X = cast(double)x;
     this.comp = this.comp.map!(t => t ^^ X).array;
   }
 
-  void sqrt() {
+  void sqrt_void() {
     this.comp = this.comp.map!(t => t.sqrt).array;
   }
 
+  void fmap_void(double delegate(double) f) {
+    this.comp = this.comp.map!(t => f(t)).array;
+  }
+
+  // ===========================================================================
+  //    Vector Function
+  // ===========================================================================
+  Vector fmap(double delegate(double) f) {
+    Vector that = Vector(comp);
+    that.fmap_void(f);
+    return that;
+  }
+
+  Vector sqrt() {
+    return fmap(t => t.sqrt);
+  }
+
+  Vector pow(T)(T x) {
+    auto X = cast(double) x;
+    return fmap((double t) => t ^^ X);
+  }
+
+  Vector add(T)(T x) {
+    auto X = cast(double) x;
+    return fmap(t => t + X);
+  }
+
+  Vector sub(T)(T x) {
+    auto X = cast(double) x;
+    return this.fmap(t => t - X);
+  }
+
+  Vector mul(T)(T x) {
+    auto X = cast(double) x;
+    return this.fmap(t => t * X);
+  }
+
+  Vector div(T)(T x) {
+    auto X = cast(double) x;
+    return this.fmap(t => t / X);
+  }
   // ===========================================================================
   // Operator Overloading
   // ===========================================================================
@@ -89,19 +141,19 @@ struct Vector {
     Vector temp = Vector(this.comp);
     switch(op) {
       case "+":
-        temp.add(rhs);
+        temp.add_void(rhs);
         break;
       case "-":
-        temp.sub(rhs);
+        temp.sub_void(rhs);
         break;
       case "*":
-        temp.mul(rhs);
+        temp.mul_void(rhs);
         break;
       case "/":
-        temp.div(rhs);
+        temp.div_void(rhs);
         break;
       case "^^":
-        temp.pow(rhs);
+        temp.pow_void(rhs);
         break;
       default:
         break;
@@ -140,6 +192,7 @@ struct Vector {
     }
     return temp;
   }
+
   // ===========================================================================
   // Statistics Operator
   // ===========================================================================
