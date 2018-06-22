@@ -11,11 +11,13 @@ proc main() {
 }
 
 proc mean(vec: [?D] ?t): real(64) {
+    var l = 0;
     var s = 0;
     for x in vec.domain {
+        l += 1;
         s += x;
     }
-    return (s: real(64)) / vec.size;
+    return (s: real(64)) / (l: real(64));
 }
 
 proc variance(vec: [?D] ?t): real(64) {

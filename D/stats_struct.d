@@ -5,23 +5,21 @@ void main() {
   a.mean.writeln;
   a.var.writeln;
   a.std.writeln;
-  // auto b = Vector([1,2,3,4]);
+  // auto b = Vector(1,20,2);
+  // b.writeln;
   // b.add(1).writeln;
   // b.sub(1).writeln;
   // b.mul(2).writeln;
   // b.div(2).writeln;
   // b.pow(2).writeln;
   // b.sqrt.writeln;
-  // b.fmap(x => x ^^ x).writeln;
+  // b.fmap(x => 2 * x - 1).writeln;
 }
 
 /++
   Vector is default class for Statistics
 +/
 struct Vector {
-  import std.algorithm.iteration : reduce, map;
-  import std.range : iota;
-  import std.array : array;
   import std.math : sqrt;
   
   double[] comp;
@@ -30,7 +28,11 @@ struct Vector {
   // Constructor
   // ===========================================================================
   this(double start, double end, double step = 1) {
-    this.comp = iota(start, end, step).map!(x => cast(double)x).array;
+    long l = cast(long)((end - start + 1) / step);
+    this.comp.length = l;
+    foreach(i; 0 .. l) {
+      this.comp[i] = start + cast(double)i * step;
+    }
   }
 
   this(double[] vec) {
@@ -220,20 +222,36 @@ struct Vector {
   // Statistics Operator
   // ===========================================================================
   pure double sum() const {
-    return this.comp.reduce!((a,b) => a+b);
+    double s = 0;
+    foreach(e; this.comp) {
+      s += e;
+    }
+    return s;
   }
   
   pure double mean() const {
-    return this.sum / (cast(double)this.length);
+    double s = 0;
+    double l = 0;
+    foreach(e; this.comp) {
+      l++;
+      s += e;
+    }
+    return s / l;
   }
 
-  double var() {
-    immutable m = this.mean;
-    immutable l = cast(double)this.length - 1;
-    return this.mapReduce(t => (t - m) ^^ 2) / l;
+  pure double var() const {
+    double m = 0;
+    double l = 0;
+    double v = 0;
+    foreach(e; this.comp) {
+      l++;
+      m += e;
+      v += e ^^ 2;
+    }
+    return (v / l - (m / l)^^2) * l / (l - 1);
   }
 
-  double std() {
+  pure double std() const {
     return sqrt(var);
   }
 }
