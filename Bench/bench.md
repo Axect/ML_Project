@@ -1,8 +1,8 @@
 | Command | Mean [ms] | Min…Max [ms] |
 |:---|---:|---:|
-| `./Chapel/bin/stats` | 81.8 ± 4.1 | 79.4…100.2 |
-| `./D/bin/stats` | 403.3 ± 9.3 | 391.1…415.5 |
-| `./Nim/stats` | 181.0 ± 4.2 | 176.0…190.8 |
-| `./Rust/bin/stats` | 79.8 ± 1.0 | 78.7…83.8 |
-| `./Chapel/bin/stats_class` | 336.1 ± 2.9 | 332.3…341.0 |
-| `./D/bin/stats_struct` | 426.8 ± 12.9 | 406.0…445.6 |
+| `./Chapel/bin/stats` | 83.9 ± 7.1 | 78.4…115.3 |
+| `./D/bin/stats` | 407.7 ± 4.9 | 399.9…412.9 |
+| `./Nim/stats` | 190.2 ± 8.0 | 182.2…211.6 |
+| `./Rust/bin/stats` | 86.5 ± 1.8 | 83.5…90.9 |
+| `./Chapel/bin/stats_class` | 361.1 ± 12.4 | 345.6…382.9 |
+| `./D/bin/stats_struct` | 493.6 ± 13.4 | 464.9…512.2 |

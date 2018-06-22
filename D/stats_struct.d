@@ -1,25 +1,25 @@
 import std.stdio : writeln;
 
 void main() {
-  // auto a = Vector(1,10_000_001);
-  // a.mean.writeln;
-  // a.var.writeln;
-  // a.std.writeln;
-  auto b = Vector([1,2,3,4]);
-  b.add(1).writeln;
-  b.sub(1).writeln;
-  b.mul(2).writeln;
-  b.div(2).writeln;
-  b.pow(2).writeln;
-  b.sqrt.writeln;
-  b.fmap(x => x ^^ x).writeln;
+  auto a = Vector(1,10_000_001);
+  a.mean.writeln;
+  a.var.writeln;
+  a.std.writeln;
+  // auto b = Vector([1,2,3,4]);
+  // b.add(1).writeln;
+  // b.sub(1).writeln;
+  // b.mul(2).writeln;
+  // b.div(2).writeln;
+  // b.pow(2).writeln;
+  // b.sqrt.writeln;
+  // b.fmap(x => x ^^ x).writeln;
 }
 
 /++
   Vector is default class for Statistics
 +/
 struct Vector {
-  import std.algorithm.iteration : sum, map;
+  import std.algorithm.iteration : reduce, map;
   import std.range : iota;
   import std.array : array;
   import std.math : sqrt;
@@ -49,36 +49,50 @@ struct Vector {
   // ===========================================================================
   void add_void(T)(T x) {
     auto X = cast(double)x;
-    this.comp = this.comp.map!(t => t + X).array;
+    foreach(i; 0 .. this.comp.length) {
+      this.comp[i] += X;
+    }
   }
 
   void sub_void(T)(T x) {
     auto X = cast(double)x;
-    this.comp = this.comp.map!(t => t - X).array;
+    foreach(i; 0 .. this.comp.length) {
+      this.comp[i] -= X;
+    }
   }
 
   void mul_void(T)(T x) {
     auto X = cast(double)x;
-    this.comp = this.comp.map!(t => t * X).array;
+    foreach(i; 0 .. this.comp.length) {
+      this.comp[i] *= X;
+    }
   }
 
   void div_void(T)(T x) {
     auto X = cast(double)x;
-    this.comp = this.comp.map!(t => t / X).array;
+    foreach(i; 0 .. this.comp.length) {
+      this.comp[i] /= X;
+    }
   }
 
   void pow_void(T)(T x) {
     auto X = cast(double)x;
-    this.comp = this.comp.map!(t => t ^^ X).array;
+    foreach(i; 0 .. this.comp.length) {
+      this.comp[i] ^^= X;
+    }
   }
 
   void sqrt_void() {
-    this.comp = this.comp.map!(t => t.sqrt).array;
+    foreach(i; 0 .. this.comp.length) {
+      this.comp[i] = sqrt(this.comp[i]);
+    }
   }
 
   // TODO: What is it delegate
   void fmap_void(double delegate(double) f) {
-    this.comp = this.comp.map!(t => f(t)).array;
+    foreach(i; 0 .. this.comp.length) {
+      this.comp[i] = f(this.comp[i]);
+    }
   }
 
   // ===========================================================================
@@ -90,18 +104,26 @@ struct Vector {
     return that;
   }
 
+  const double mapReduce(double delegate(double) f) {
+    double s = 0;
+    foreach(e; this.comp) {
+      s += f(e);
+    }
+    return s;
+  }
+
   Vector sqrt() {
-    return fmap(t => t.sqrt);
+    return this.fmap(t => t.sqrt);
   }
 
   Vector pow(T)(T x) {
     auto X = cast(double) x;
-    return fmap((double t) => t ^^ X);
+    return this.fmap((double t) => t ^^ X);
   }
 
   Vector add(T)(T x) {
     auto X = cast(double) x;
-    return fmap(t => t + X);
+    return this.fmap(t => t + X);
   }
 
   Vector sub(T)(T x) {
@@ -198,18 +220,17 @@ struct Vector {
   // Statistics Operator
   // ===========================================================================
   pure double sum() const {
-    return comp.sum;
+    return this.comp.reduce!((a,b) => a+b);
   }
   
   pure double mean() const {
-    return sum() / (cast(double)length);
+    return this.sum / (cast(double)this.length);
   }
 
   double var() {
-    Vector temp = Vector(comp);
-    immutable m = mean;
-    immutable l = cast(double)length - 1;
-    return temp.comp.map!(t => (t - m)^^2).sum / l;
+    immutable m = this.mean;
+    immutable l = cast(double)this.length - 1;
+    return this.mapReduce(t => (t - m) ^^ 2) / l;
   }
 
   double std() {
