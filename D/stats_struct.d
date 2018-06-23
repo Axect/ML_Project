@@ -2,9 +2,10 @@ import std.stdio : writeln;
 
 void main() {
   auto a = Vector(1,10_000_001);
-  a.mean.writeln;
-  a.var.writeln;
-  a.std.writeln;
+  auto b = a.sub(5_000_000);
+  b.mean.writeln;
+  b.var.writeln;
+  b.std.writeln;
   // auto b = Vector(1,20,2);
   // b.writeln;
   // b.add(1).writeln;
