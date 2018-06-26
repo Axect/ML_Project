@@ -4,6 +4,7 @@ bayes <- function(x) min(x,1-x)
 nearest <- function(x) 2*x*(1-x)
 matushita <- function(x) sqrt(x*(1-x))
 entropy <- function(x) -x*log(x)-(1-x)*log(1-x)
+negJeffrey <- function(x) -(2*x - 1) * log(x/(1-x))
 
 x <- seq(0.001,0.999, 0.01)
 
@@ -11,6 +12,7 @@ bV <- Vectorize(bayes)
 nV <- Vectorize(nearest)
 mV <- Vectorize(matushita)
 eV <- Vectorize(entropy)
+jV <- Vectorize(negJeffrey)
 
 lab <- c(rep("bayes",100),rep("nearest", 100),rep("matushita",100),rep("entropy",100))
 val <- c(bV(x), nV(x), mV(x), eV(x))
