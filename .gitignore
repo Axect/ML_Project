@@ -1,3 +1,4 @@
 */nimcache/*
 *.o
 *.hi
+*.c
