@@ -59,7 +59,7 @@ class: center, middle
 
 1. Types of Machine Learning
 2. Scoring Machine Learning Algorithm
-3. ...
+3. Data as Probability
 
 ---
 
@@ -322,7 +322,7 @@ $$F_1 = 2 \times \frac{TPR \times PPV}{TPR + PPV}$$
 
 ---
 
-* Left, Top is better (TPR High, TNR Low)
+* Left, Top is better (TPR High, TNR High)
 
 --
 
@@ -352,20 +352,129 @@ We need more precise way to determine better classifier
 
 <font style="color:red">It's not true!</font>
 
+--
+
+* Matthew's Correlation Coefficient
+
+$$ MCC = \frac{TP \times TN - FP \times FN}{\sqrt{(TP + FP)(TP + FN)(TN + FP)(TN + FN)}}$$
+
+(If any parenthesis in denominator become zero, then set denominator is 1.)
+
+--
+
+* MCC `\(\rightarrow\)` 1 : Perfect Prediction
+* MCC `\(\rightarrow\)` 0 : No better then random Prediction
+* MCC `\(\rightarrow\)` -1 : total disagreement between prediction and observation
+
 ---
 
-# Display and Inline
- 
-1. This is an inline integral: `\(\int_a^bf(x)dx\)`
-2. More `\(x={a \over b}\)` formulae.
+## 5. Precision & Trueness
 
-Display formula:
-
-$$e^{i\pi} + 1 = 0$$
+<p style="text-align:center"><img src="trueness.png" alt="trueness" width="70%"></p>
 
 ---
 
-# Introduction
+class: center, middle
+
+# Data as Probability
+
+---
+
+* Conditional Probability
+
+$$ P(C_i | X_j) $$
+
+--
+
+* Joint Probability
+
+$$ P(C_i, X_j) $$
+
+--
+
+* Bayes' rule
+
+$$ P(C_i | X_j) = \frac{P(X_j|C_i)P(C_i)}{P(X_j)}$$
+
+--
+
+* `\(P(C_i | X_j)\)` : Posterior Probability
+
+--
+
+* `\(P(C_i)\)` : Prior Probability
+
+--
+
+* `\(P(X_j | C_i)\)` : Class Conditional Probability
+
+--
+
+* Total Probability 
+
+$$ P(X_j) = \sum_i P(X_j|C_i)P(C_i) $$
+
+---
+
+### How to define class?
+
+<img src="overlap.png" alt="overlap" width="100%">
+
+* How to determine class for overlap area?
+
+---
+
+### Maximum A Priori (MAP)
+
+* Choose class which has large prior probability
+
+$$ P(C_i | x) > P(C_j | x) \hspace{0.5cm} \forall i \neq j $$
+
+--
+
+<br/>
+
+<i>&nbsp; Let `\(P(C_1|x) = 0.35, P(C_2 |x) = 0.45, P(C_3 |x) = 0.2\)`. As an example, suppose that the inputs are the results of a blood test,
+the three classes are different possible diseases, and the output is whether or not to treat
+with a particular antibiotic. The MAP method has told us that the output is `\(C_2\)` , and so
+we will not treat the disease. But what is the probability that it does not belong to class
+`\(C_2\)`, and so should have been treated with the antibiotic? It is `\(1 − P (C_2 | x) = 0.55\)`. So the
+MAP prediction seems to be wrong</i>
+
+--
+
+<br>
+
+* We need another solution - **Bayes' Optimal Classification**
+
+---
+
+### Bayes' Optimal Classification
+
+--
+
+* Minimizing risk is better than just maximizing posterior probability, 
+
+--
+
+* We need to quantify misclassification - **Loss Matrix**
+
+--
+
+* Loss matrix : Risk of misclassification of `\(C_i \rightarrow C_j \)`
+
+--
+
+* Discuss later
+
+---
+
+## Naive Bayes classifier
+
+
+
+---
+
 
     </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
