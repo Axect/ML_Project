@@ -66,6 +66,8 @@ class: center, middle
 
 4. Basics of C Programming
 
+5. Practice
+
 ---
 
 class: center, middle
@@ -517,12 +519,115 @@ int main() {
 #endif
 }
 ```
---
-
-
 
 ---
 
+## Math library
+
+--
+
+* Usage: `#include <math.h>`
+
+--
+
+<table id="tab01" align="center">
+  <tr>
+    <th>Function name</th>
+    <th>Operation</th>
+  </tr>
+  <tr>
+    <td><font face="Ubuntu Mono">sqrt(x)</font></td>
+    <td>\(\sqrt{x}\)</td>
+  </tr>
+  <tr>
+    <td><font face="Ubuntu Mono">pow(x,y)</font></td>
+    <td>\(x^y\)</td>
+  </tr>
+  <tr>
+    <td><font face="Ubuntu Mono">exp(x)</font></td>
+    <td>\(e^{x}\)</td>
+  </tr>
+  <tr>
+    <td><font face="Ubuntu Mono">log(x)</font></td>
+    <td>\(\ln{x}\)</td>
+  </tr>
+  <tr>
+    <td><font face="Ubuntu Mono">sin(x)</font></td>
+    <td>\(\sin{x}\)</td>
+  </tr>
+  <tr>
+    <td><font face="Ubuntu Mono">cos(x)</font></td>
+    <td>\(\cos{x}\)</td>
+  </tr>
+  <tr>
+    <td><font face="Ubuntu Mono">tan(x)</font></td>
+    <td>\(\tan{x}\)</td>
+  </tr>
+  <tr>
+    <td><font face="Ubuntu Mono">fabs(x)</font></td>
+    <td>\(|x|\)</td>
+  </tr>
+</table>
+
+---
+
+class: center, middle
+
+# Practice
+
+---
+
+### Launching a mass in gravitational field
+
+--
+
+* Velocity
+
+--
+
+$$ v_x = v_0 \cos{\theta} $$
+$$ v_y = v_0 \sin{\theta} - gt $$
+
+--
+
+* Distance
+
+--
+
+$$ S_x = v_x t$$
+$$ S_y = v_y t - \frac{1}{2}gt^2 $$
+
+---
+
+### Let's Implement
+
+```c
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+
+#define G 9.82
+
+int main() {
+  double t = 0;         /* time */
+  double theta;         /* launching angle */
+  double v0, v0x, v0y;  /* initial v */
+  double xt, yt, vx, vy;
+
+  /* Implement
+
+  1. Insert launching angle in radiants
+  2. Insert initial velocity in m/sec
+  3. Insert the time value t
+  4. Print Coordinate at time t
+  5. Print Velocity at time t
+
+  */
+  exit(0);
+}
+```
+
+---
 
     </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
