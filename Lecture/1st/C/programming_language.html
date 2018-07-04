@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Introduce C</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3, h4, h5 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+
+      #tab01 {
+        border-collapse: collapse;
+        width: 80%;
+      }
+
+      #tab01 td, #tab01 th {
+        border-bottom: 1px solid #ddd;
+        padding: 8px;
+      }
+
+      #tab01 tr:nth-child(even){
+        background-color: #f2f2f2;
+      }
+
+      #tab01 tr:hover {background-color: #ddd;}
+
+      #tab01 th {
+        padding-top: 8px;
+        padding-bottom:8px;
+        text-align: center;
+        background: #555555;
+        color: #f2f2f2;
+      }
+
+      #tab01 td {
+        text-align:center;
+      }
+
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Introduce C
+
+<h3 style="color: gray">Presented by Tae Geun Kim</h3>
+
+---
+
+# Table of Contents
+
+1. Why C?
+
+2. History of C
+
+3. Characteristics of C
+
+4. Basics of C Programming
+
+---
+
+class: center, middle
+
+# Why C?
+
+---
+
+## Why C?
+
+Learning programming is same as learning how to talk
+
+--
+
+* Difficult to talk first time
+
+--
+
+* But once we know how to talk, then easy to learn other different languages.
+
+--
+
+Then Why C?
+
+--
+
+* To learn how to program an OOP or FP is a bit too extreme for those who want to learn how to write computer programs for scientific applications.
+
+--
+
+* If you master C, then you can also understand C++
+
+--
+
+* And C has extreme performance
+
+---
+
+class: center, middle
+
+# History of C
+
+---
+
+## Timeline of C
+
+--
+
+* BCPL - Richards (1967)
+
+--
+
+* B Language - Ken Thompson (1970)
+
+--
+
+* C Language - Dennis Ritchie (1972)
+
+--
+
+* K & R - Brian Kerninghan & Dennis Ritchie (1988)
+
+--
+
+* ANSI-C - ANSI (1983)
+
+--
+
+* C99 - ISO/IEC 9899:1999 (1999)
+
+--
+
+* ANSI Chose C99 - ANSI (2000)
+
+--
+
+* C11 - ISO/IEC 9899:2011 (2011)
+
+---
+
+class: center, middle
+
+# Characteristics of C
+
+---
+
+## Characteristics of C
+
+--
+
+* C is a procedural language, not fully structured and typed
+
+--
+
+* C is weakly typed language
+
+--
+
+<p style="text-align:center"><img src="weak.png" alt="weak" width="80%"></p>
+
+---
+
+## Characteristics of C
+
+* C Compile Process is below :
+
+--
+
+<p style="text-align: center"><img src="compile.png" alt="compile" width="50%"></p>
+
+---
+
+class: center, middle
+
+# Basics of C Programming
+
+---
+
+## Types 
+
+<table id="tab01" align="center">
+  <tr>
+    <th>Type</th>
+    <th>Variable</th>
+    <th>Number of bits</th>
+  </tr>
+  <tr>
+    <td><font face="Ubuntu Mono">char</font></td>
+    <td>character</td>
+    <td>8</td>
+  </tr>
+  <tr>
+    <td><font face="Ubuntu Mono">short</font></td>
+    <td>integer</td>
+    <td>16</td>
+  </tr>
+  <tr>
+    <td><font face="Ubuntu Mono">int</font></td>
+    <td>integer</td>
+    <td>32</td>
+  </tr>
+  <tr>
+    <td><font face="Ubuntu Mono">long</font></td>
+    <td>integer</td>
+    <td>32</td>
+  </tr>
+  <tr>
+    <td><font face="Ubuntu Mono">long long int</font></td>
+    <td>integer</td>
+    <td>64</td>
+  </tr>
+  <tr>
+    <td><font face="Ubuntu Mono">float</font></td>
+    <td>rational</td>
+    <td>32</td>
+  </tr>
+  <tr>
+    <td><font face="Ubuntu Mono">double</font></td>
+    <td>rational</td>
+    <td>64</td>
+  </tr>
+  <tr>
+    <td><font face="Ubuntu Mono">long double</font></td>
+    <td>rational</td>
+    <td>96</td>
+  </tr>
+</table>
+
+---
+
+## Operators - Arithmetic
+
+<table id="tab01" align="center">
+  <tr>
+    <th>Operation</th>
+    <th>Expression</th>
+    <th>Overloadable</th>
+  </tr>
+  <tr>
+    <td>addition</td>
+    <td><font face="Ubuntu Mono">a + b</font></td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td>subtraction</td>
+    <td><font face="Ubuntu Mono">a - b</font></td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td>product</td>
+    <td><font face="Ubuntu Mono">a * b</font></td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td>division</td>
+    <td><font face="Ubuntu Mono">a / b</font></td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td>modulus</td>
+    <td><font face="Ubuntu Mono">a % b</font></td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td>increment(pre)</td>
+    <td><font face="Ubuntu Mono">++a</font></td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td>increment(post)</td>
+    <td><font face="Ubuntu Mono">a++</font></td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td>decrement(pre)</td>
+    <td><font face="Ubuntu Mono">--a</font></td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td>decrement(post)</td>
+    <td><font face="Ubuntu Mono">a--</font></td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td>negation</td>
+    <td><font face="Ubuntu Mono">-a</font></td>
+    <td>Yes</td>
+  </tr>
+</table>
+
+---
+
+## Operators - Relational
+
+<table id="tab01" align="center">
+  <tr>
+    <th>Operator</th>
+    <th>Relation</th>
+    <th>Overloadable</th>
+  </tr>
+  <tr>
+    <td><font face="Ubuntu Mono">></font></td>
+    <td>Larger than</td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td><font face="Ubuntu Mono">>=</font></td>
+    <td>Larger than or equal to</td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td><font face="Ubuntu Mono"><</font></td>
+    <td>Smaller than</td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td><font face="Ubuntu Mono"><=</font></td>
+    <td>Smaller than or equal to</td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td><font face="Ubuntu Mono">==</font></td>
+    <td>Equal to</td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td><font face="Ubuntu Mono">!=</font></td>
+    <td>Not equal to</td>
+    <td>Yes</td>
+  </tr>
+</table>
+
+---
+
+## Operators - Logical
+
+<table id="tab01" align="center">
+  <tr>
+    <th>Operator</th>
+    <th>Symbol</th>
+    <th>Overloadable</th>
+  </tr>
+  <tr>
+    <td>AND</td>
+    <td><font face="Ubuntu Mono">&&</font></td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td>OR</td>
+    <td><font face="Ubuntu Mono">||</font></td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td>NOT</td>
+    <td><font face="Ubuntu Mono">!</font></td>
+    <td>Yes</td>
+  </tr>
+</table>
+
+---
+
+## I/O
+
+### Example : Unit Conversion
+
+```c
+#include <stdio.h>
+
+int main() {
+  double tc, tf, offset, conv;
+  offset = 32;
+  conv = 5. / 9.;
+
+  printf("Value in degrees Fahrenheit = ");
+  scanf("%lf", &tf);
+  tc = (tf - offset) * conv;
+  printf("Value in degree Celsius = %f", tc);
+}
+```
+
+---
+
+### Printf format specifier
+
+<table id="tab01" align="center">
+  <tr>
+    <th>Format Specifier</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><font face="Ubuntu Mono">%c</font></td>
+    <td><font face="Ubuntu Mono">char</font> (single)</td>
+  </tr>
+  <tr>
+    <td><font face="Ubuntu Mono">%s</font></td>
+    <td><font face="Ubuntu Mono">char</font> (string)</td>
+  </tr>
+  <tr>
+    <td><font face="Ubuntu Mono">%d,%i</font></td>
+    <td><font face="Ubuntu Mono">int</font></td>
+  </tr>
+  <tr>
+    <td><font face="Ubuntu Mono">%f</font></td>
+    <td><font face="Ubuntu Mono">float,double</font></td>
+  </tr>
+  <tr>
+    <td><font face="Ubuntu Mono">%e</font></td>
+    <td><font face="Ubuntu Mono">float,double</font> (scientific)</td>
+  </tr>
+  <tr>
+    <td><font face="Ubuntu Mono">%g</font></td>
+    <td><font face="Ubuntu Mono">flaot,double</font> (shorter)</td>
+  </tr>
+</table>
+
+---
+
+### Scanf format specifier
+
+<table id="tab01" align="center">
+    <tr>
+      <th>Format Specifier</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><font face="Ubuntu Mono">%c</font></td>
+      <td><font face="Ubuntu Mono">char</font> (single)</td>
+    </tr>
+    <tr>
+      <td><font face="Ubuntu Mono">%s</font></td>
+      <td><font face="Ubuntu Mono">char</font> (string)</td>
+    </tr>
+    <tr>
+      <td><font face="Ubuntu Mono">%d,%i</font></td>
+      <td><font face="Ubuntu Mono">int</font></td>
+    </tr>
+    <tr>
+      <td><font face="Ubuntu Mono">%u</font></td>
+      <td><font face="Ubuntu Mono">unsigned int</font></td>
+    </tr>
+    <tr>
+      <td><font face="Ubuntu Mono">%Lu</font></td>
+      <td><font face="Ubuntu Mono">unsigned long long int</font></td>
+    </tr>
+    <tr>
+      <td><font face="Ubuntu Mono">%f</font></td>
+      <td><font face="Ubuntu Mono">float</font></td>
+    </tr>
+    <tr>
+      <td><font face="Ubuntu Mono">%lf</font></td>
+      <td><font face="Ubuntu Mono">double</font></td>
+    </tr>
+    <tr>
+      <td><font face="Ubuntu Mono">%Lf,%llf</font></td>
+      <td><font face="Ubuntu Mono">long double</font></td>
+    </tr>
+  </table>
+
+---
+
+## Preprocessor Directives
+
+* What is it? : Starts with `#` (ex: `#include, #define ...`)
+
+--
+
+* Why use it? : define constant, no memory operation, divide Characteristics
+
+--
+
+For Example
+
+* `define G 9.81`
+
+--
+
+* `define MASS_E 0.51`
+
+--
+
+* `define SUMQ(a, b) ((a * a) + (b * b))`
+
+---
+
+### Example
+
+```c
+#include <stdio.h>
+
+#define TF2TC
+
+int main() {
+  double tc, tf, offset, conv;
+  offset = 32;
+
+#ifdef TF2TC
+  conv = 5. / 9.;
+  printf("Value in degrees Fahrenheit = ");
+  scanf("%lf", &tf);
+  tc = (tf - offset) * conv;
+  printf("Value in degrees Celsius = %f\n", tc);
+#endif
+#ifndef TF2TC
+  conv = 9. / 5.;
+  printf("Value in degrees Celsius = ");
+  scanf("%lf", &tc);
+  tf = tc * conv + offset;
+  printf("Value in degrees Fahrenheit = %f\n", tf);
+#endif
+}
+```
+--
+
+
+
+---
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured" type="text/javascript"></script>
+
+    <script>
+      var slideshow = remark.create();
+
+      MathJax.Hub.Config({
+          tex2jax: {
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+          }
+      });
+
+      MathJax.Hub.Configured();
+    </script>
+  </body>
+</html>
