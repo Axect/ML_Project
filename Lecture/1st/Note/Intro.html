@@ -60,6 +60,8 @@ class: center, middle
 1. Types of Machine Learning
 2. Scoring Machine Learning Algorithm
 3. Data as Probability
+4. Basic Statistics
+5. Bias-Variance Tradeoff
 
 ---
 
@@ -471,9 +473,145 @@ MAP prediction seems to be wrong</i>
 
 ## Naive Bayes classifier
 
+--
 
+* If `\(X_j\)` is n-dimensional vector, then
+
+$$P(X_j | C_i) = P(X_j^1, X_j^2, \cdots , X_j^n | C_i)$$
+
+--
+
+* Since high dimension demands more data, we assume conditionally independence
+
+$$P(X_j^1 = a_1, X_j^2 = a_2, \cdots X_j^n = a_n | C_i) = \prod_k P(X_j^k = a_k | C_i)$$
+
+--
+
+* Naive bayes classification is :
+
+$$\underset{C_i}{\text{argmax}}\left[ P(C_i)\prod_k P(X_j^k = a_k | C_i) \right]$$
 
 ---
+
+<p style="text-align:center"><img src="naive.png" alt="naive" width="100%"></p>
+
+* Q : If near deadline, no party and lazy then what's your activity?
+
+---
+
+class: center, middle
+
+# Basic Statistics
+
+---
+
+* Mean
+
+$$ E[\mathbf{x}] = \int x \mu(dx) = \int xf(x) dx = \sum_i x_i p_i $$
+
+--
+
+* Variance
+
+$$ V(\mathbf{x}) = E((\mathbf{x} - \mathbf{\mu})^2) $$
+
+--
+
+* Standard Deviation
+
+$$ \sigma(\mathbf{x}) = \sqrt{(V(\mathbf{x}))}$$
+
+--
+
+* Covariance
+
+$$ \text{Cov}(\mathbf{x}, \mathbf{y}) = E((\mathbf{x} - \mathbf{\mu})(\mathbf{y} - \mathbf{\nu})) $$
+
+---
+
+* Covariance Matrix
+
+--
+
+$$\Sigma = \begin{pmatrix}
+E[(x_1 - \mu_1)(x_1 - \mu_1)] & E[(x_1 - \mu_1)(x_2 - \mu_2)] & \cdots \\\
+E[(x_2 - \mu_2)(x_1 - \mu_1)] & E[(x_2 - \mu_2)(x_2 - \mu_2)] & \cdots \\\
+\cdots & \cdots & \cdots
+\end{pmatrix}$$
+
+--
+
+* Matrix Form
+
+$$\Sigma = E[(X - E[X])(X - E[X])^T] $$
+
+---
+
+## Mahalanobis Distance
+
+<img src="mahalanobis.png" alt="mahalanobis" width="100%">
+
+---
+
+## Mahalanobis Distance
+
+* Formula
+
+--
+
+$$ D_M (\mathbf{x}) = \sqrt{\bf (x - \mu)^T \Sigma^{-1} (x - \mu)}$$
+
+--
+
+<p style="text-align:center"><img src="md.png" alt="md" width=50%></p>
+
+---
+
+## Gaussian Distribution
+
+--
+
+* By **Central Limit Theorem**, every distribution converge to gaussian distribution.
+
+--
+
+* Formula
+
+$$ p(x) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left( \frac{-(x-\mu)^2}{2\sigma^2} \right) $$
+
+--
+
+<p style="text-align:center"><img src="normal.png" alt="normal" width="90%"></p>
+
+---
+
+## Gaussian Distribution
+
+* For High dimension
+
+--
+
+$$p(\mathbf{x}) = \frac{1}{(2\pi)^{d/2}|\mathbf{\Sigma}|^{1/2}} \exp \( -\frac{1}{2} (\mathbf{x} - \mu)^T\mathbf{\Sigma}^{-1}(\mathbf{x} - \mu) \) $$
+
+---
+
+class: center, middle
+
+# Bias-Variance Tradeoff
+
+---
+
+## Bias-Variance Tradeoff
+
+<img src="bias.png" alt="bias" width="100%">
+
+---
+
+## Bias-Variance Tradeoff
+
+<p style="text-align: center"><img src="bias2.png" alt="bias2" width="90%"></p>
+
+
 
 
     </textarea>
