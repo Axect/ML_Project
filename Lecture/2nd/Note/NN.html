@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Neural Network</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      @import url('https://fonts.googleapis.com/css?family=Libre+Baskerville');
+      @import url('https://fonts.googleapis.com/css?family=Righteous');
+      @import url('https://fonts.googleapis.com/css?family=EB+Garamond');
+      @import url('https://fonts.googleapis.com/css?family=Caveat');
+      @import url('https://fonts.googleapis.com/css?family=Kalam');
+
+      body { font-family: 'Kalam'; }
+      h1, h2, h3, h4, h5 {
+        font-family: 'Caveat';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+
+      #tab01 {
+        border-collapse: collapse;
+        width: 80%;
+      }
+
+      #tab01 td, #tab01 th {
+        border-bottom: 1px solid #ddd;
+        padding: 8px;
+      }
+
+      #tab01 tr:nth-child(even){
+        background-color: #f2f2f2;
+      }
+
+      #tab01 tr:hover {background-color: #ddd;}
+
+      #tab01 th {
+        padding-top: 8px;
+        padding-bottom:8px;
+        text-align: center;
+        background: #555555;
+        color: #f2f2f2;
+      }
+
+      #tab01 td {
+        text-align:center;
+      }
+
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Neural Network
+
+<h3 style="color: gray">Presented by Tae Geun Kim</h3>
+
+---
+
+# Table of Contents
+
+--
+
+1. Brain & Neuron
+
+--
+
+2. Neural Network
+
+--
+
+3. Data as Probability
+
+--
+
+4. Basic Statistics
+
+--
+
+5. Bias-Variance Tradeoff
+
+---
+
+class: center, middle
+
+# Brain & Neuron
+
+---
+
+## Neuron
+
+<img src="neuron.png" alt="neuron" width="100%">
+
+---
+
+## Neuron
+
+<img src="potential.png" alt="potential" width="100%">
+
+---
+
+### Membrane potential
+
+--
+
+1. Potential reaches threshold
+
+--
+
+2. Neuron is activated, sends pulse to synapse by axon
+
+--
+
+3. Neuron is into refactory period
+
+--
+
+<p style="text-align: center"><img src="weight.png" alt="weight" width="40%"></p>
+
+--
+
+Q. How to determine weights to each neuron?
+
+---
+
+### Hebb's Rule
+
+--
+
+<i>In neuroscience, Hebbian theory is a theory that proposes an explanation for the adaptation of neurons in the brain during the learning process. 
+It describes a basic mechanism for **synaptic plasticity**, where an increase in synaptic efficacy arises from the presynaptic cell's repeated and persistent stimulation of the postsynaptic cell.</i>
+
+--
+
+<p style="text-align: center"><img src="pavlov.png" alt="pavlov" width="80%"></p>
+
+---
+
+### McCulloch & Pitts
+
+<img src="pitts.png" alt="pitts" width="100%">
+
+---
+
+### McCulloch & Pitts
+
+--
+
+1. Summation inputs with weights
+$$h = \sum_{i=1}^n w_i x_i $$
+
+--
+
+2. Compare `\(h\)` with `\(\theta\)` (threshold) - Activation Function
+$$ o = g(h) = \begin{cases} 1 & \text{if } h > \theta \\\
+0 & \text{if } h \leq \theta \end{cases}$$
+
+--
+<br/>
+
+That's it!
+
+---
+
+### McCulloch & Pitts - Limitation
+
+--
+
+* Real Neuron does not return single value - output **spike train**
+
+--
+
+* Threshold also changes as time goes on
+
+--
+
+* Neurons are not sequentially updated - Randomly updated
+
+--
+
+* Can't commute positive & negative values - **Excitatory connections & Inhibitory connections**
+
+--
+
+* Neuron has feedback loop but McCulloch & Pitts does not have
+
+---
+
+class: center, middle
+
+# Perceptron
+
+---
+
+## Neural Network
+
+--
+
+* Single neuron isn't interesting
+
+--
+
+* We need more neurons - **Neural Network**
+
+--
+
+
+Then questions :
+
+* How to connect neurons?
+
+--
+
+
+Modified questions :
+
+* How should we change the weights and thresholds of the neurons so that the network gets the right answer more often?
+
+---
+
+## Perceptron
+
+.center[<img src="mlp.png" alt="mlp" width="80%">]
+
+---
+
+## Perceptron
+
+--
+
+* Perceptron consists of **Input layer, Hidden layer, Output layer**
+
+--
+
+* Each neurons is **independent**
+
+--
+
+* Weights form matrix - `\(w_{ij}\)` : weight between `\(i\)`th & `\(j\)`th neuron
+
+--
+
+* Activation for each output layer neurons
+
+--
+
+* If neuron's output is not answer, then control weights
+
+<br/>
+
+--
+
+Q. How to control weights?
+
+---
+
+## Perceptron
+
+--
+
+* If a neuron which should be activated is deactivated then it means small weighted and vice versa
+
+--
+
+* In equation :
+$$ \Delta w_{ik} = -(y_k - t_k) \times x_i $$
+
+--
+
+* More General :
+$$ w\_{ij} ~ \leftarrow w\_{ij} ~ - \eta(y\_j - t\_j) \cdot x\_i$$
+
+--
+<br/>
+
+
+&#9885; `\(\eta\)` : Learning Rate (Most of case : `\(0.1 < \eta < 0.4\)` )
+
+
+---
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured" type="text/javascript"></script>
+
+    <script>
+      var slideshow = remark.create();
+
+      MathJax.Hub.Config({
+          tex2jax: {
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+          }
+      });
+
+      MathJax.Hub.Configured();
+    </script>
+  </body>
+</html>
