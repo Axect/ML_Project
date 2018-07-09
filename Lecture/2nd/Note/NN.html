@@ -280,7 +280,107 @@ $$ w\_{ij} ~ \leftarrow w\_{ij} ~ - \eta(y\_j - t\_j) \cdot x\_i$$
 
 &#9885; `\(\eta\)` : Learning Rate (Most of case : `\(0.1 < \eta < 0.4\)` )
 
+---
 
+## Perceptron
+
+--
+
+### Bias Node
+
+--
+
+* If input values are zero, then we can't update our weights
+
+--
+
+* To prevent this situation, we should put at least one fixed node
+--
+ `\(\rightarrow\)` **Bias Node**
+
+--
+
+* In our slide, we use `\(-1\)` as fixed input value of Bias node 
+
+---
+
+## Perceptron - Algorithm
+
+--
+
+* Initialization : Set all weights as random numbers
+
+--
+
+* Training : Repeat `\(T\)` times 
+--
+  
+  * Calculate activation : 
+   $$ y\_j = g\left(\sum\_{i=0}^m w\_{ij} x\_i\right) =
+    \begin{cases}
+      1 & \text{if } \sum w\_{ij}x\_i > 0 \\\
+      0 & \text{if } \sum w\_{ij}x\_i \leq 0
+    \end{cases}$$
+--
+  
+  * Update weights :
+    $$ w\_{ij} \leftarrow w\_{ij} - \eta(y\_j - t\_j) \cdot x\_i$$
+--
+
+* Recall : Calculate last activation
+$$ y\_j = g\left(\sum\_{i=0}^m w\_{ij} x\_i\right) =
+    \begin{cases}
+      1 & \text{if } \sum w\_{ij}x\_i > 0 \\\
+      0 & \text{if } \sum w\_{ij}x\_i \leq 0
+    \end{cases}$$
+
+---
+
+## Perceptron - Example (OR)
+
+--
+
+<table id="tab01" align="center">
+  <tr>
+    <th>\(In_1\)</th>
+    <th>\(In_2\)</th>
+    <th>\(t\)</th>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>0</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>1</td>
+    <td>1</td>
+  </tr>
+</table>
+
+--
+
+* `\( x_1 = In_1,~ x_2 = In_2, ~ y = t\)`
+
+--
+
+* Initial Condition: `\(w_0 = -0.05, ~ w_1 = -0.02 ~ w_2 = 0.02\)`
+
+--
+
+<br/>
+
+Q. Let's apply Perceptron algorithm once with `\(\eta = 0.25\)`
 ---
 
 
