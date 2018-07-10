@@ -21,7 +21,7 @@ activation <- function(s) {
     return(ans)
 }
 
-nodes <- function(weights, input) {
+output <- function(weights, input) {
     s <- input %*% weights
     g <- Vectorize(activation)
     y <- g(s)
@@ -29,7 +29,7 @@ nodes <- function(weights, input) {
 }
 
 update <- function(weights, input, answer, eta = 0.25) {
-    y <- nodes(weights, input)
+    y <- output(weights, input)
     w <- weights - eta * (t(x) %*% (y - answer))
     return(w)
 }
@@ -40,7 +40,7 @@ train <- function(weights, input, answer, eta = 0.25, times) {
        w <- update(w, input, answer, eta = 0.25)
        print(w)
     }
-    return(nodes(w, input))
+    return(output(w, input))
 }
 
 # ==============================================================================
