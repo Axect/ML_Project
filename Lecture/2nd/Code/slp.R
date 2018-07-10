@@ -58,3 +58,14 @@ t <- c(0,1,1,1)
 y <- train(w, x, t, 0.25, 10)
 
 print(y)
+
+
+# Sample Plot
+f <- function(x) {
+    w0 <- 0.003228144
+    w1 <- 0.493372795
+    w2 <- 0.174829558
+    return(- w1 / w2 * x + w0 / w2)
+}
+
+plot(f)
