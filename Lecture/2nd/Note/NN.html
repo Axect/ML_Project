@@ -381,6 +381,126 @@ class: center, middle
 
 <br/>
 
+---
+
+## Hint - R Code
+
+Dimension of objects
+
+--
+
+* input : N x m
+
+--
+
+* output : N x n
+
+--
+
+* weight : m x n
+
+--
+
+* answer : N x n
+
+---
+
+## Hint - R Code
+
+Weight Initialization
+
+```R
+weights_init <- function(m, n) {
+    w <- runif(m, -1, 1)
+    if(n==1) {
+        return(w) # 1 * m matrix
+    } else {
+        for (i in 2:n) {
+            w <- cbind(w, runif(m, -1, 1))
+        }
+        return(w)
+    }
+}
+```
+
+---
+
+## Hint - R Code
+
+Activation
+
+```R
+activation <- function(s) {
+    ans <- if(s > 0) 1 else 0
+    return(ans)
+}
+```
+
+--
+
+Output
+
+```R
+output <- function(weights, input) {
+    s <- input %*% weights
+    g <- Vectorize(activation)
+    y <- g(s)
+    return(y)
+}
+```
+
+---
+
+## Hint - R Code
+
+Update Weight
+
+```R
+update <- function(weights, input, answer, eta = 0.25) {
+    y <- output(weights, input)
+    w <- weights - eta * (t(x) %*% (y - answer))
+    return(w)
+}
+```
+
+--
+
+Training
+
+```R
+train <- function(weights, input, answer, eta = 0.25, times) {
+    w <- weights
+    for (i in 1:(times - 1)) {
+       w <- update(w, input, answer, eta = 0.25)
+       print(w)
+    }
+    return(output(w, input))
+}
+```
+
+---
+
+## Hint - R Code
+
+Example - OR
+
+```R
+w <- weights_init(3,1)
+
+x <- matrix(0, 4, 3)
+x[,1] = -1 # Bias
+x[,2] = c(0,1,0,1)
+x[,3] = c(0,0,1,1)
+
+t <- c(0,1,1,1)
+
+y <- train(w, x, t, 0.25, 10)
+
+print(y)
+```
+
+---
+
 
     </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

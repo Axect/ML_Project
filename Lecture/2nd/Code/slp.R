@@ -49,7 +49,7 @@ train <- function(weights, input, answer, eta = 0.25, times) {
 w <- weights_init(3,1)
 
 x <- matrix(0, 4, 3)
-x[,1] = -1
+x[,1] = -1 # Bias
 x[,2] = c(0,1,0,1)
 x[,3] = c(0,0,1,1)
 
@@ -62,10 +62,14 @@ print(y)
 
 # Sample Plot
 f <- function(x) {
-    w0 <- 0.003228144
-    w1 <- 0.493372795
-    w2 <- 0.174829558
+    w0 <- 0.2356196
+    w1 <- 0.2797721
+    w2 <- 0.2823095
     return(- w1 / w2 * x + w0 / w2)
 }
 
-plot(f)
+plot(f, type='l', xlim=c(0,1), ylim=c(0,1), xlab="In1", ylab="In2")
+points(0,0)
+points(1,0)
+points(0,1)
+points(1,1)
