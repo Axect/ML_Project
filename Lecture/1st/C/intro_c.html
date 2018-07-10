@@ -7,11 +7,17 @@
       @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
       @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
       @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      @import url('https://fonts.googleapis.com/css?family=Libre+Baskerville');
+      @import url('https://fonts.googleapis.com/css?family=Righteous');
+      @import url('https://fonts.googleapis.com/css?family=EB+Garamond');
+      @import url('https://fonts.googleapis.com/css?family=Caveat');
+      @import url('https://fonts.googleapis.com/css?family=Kalam');
 
-      body { font-family: 'Droid Serif'; }
+      body { font-family: 'Kalam'; }
       h1, h2, h3, h4, h5 {
-        font-family: 'Yanone Kaffeesatz';
+        font-family: 'Caveat';
         font-weight: normal;
+        text-shadow: 1px 2px 2px grey;
       }
       .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
 
@@ -480,15 +486,15 @@ int main() {
 
 For Example
 
-* `define G 9.81`
+* `#define G 9.81`
 
 --
 
-* `define MASS_E 0.51`
+* `#define MASS_E 0.51`
 
 --
 
-* `define SUMQ(a, b) ((a * a) + (b * b))`
+* `#define SUMQ(a, b) ((a * a) + (b * b))`
 
 ---
 
@@ -595,6 +601,7 @@ $$ v_y = v_0 \sin{\theta} - gt $$
 --
 
 $$ S_x = v_x t$$
+
 $$ S_y = v_y t - \frac{1}{2}gt^2 $$
 
 ---

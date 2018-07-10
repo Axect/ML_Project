@@ -7,11 +7,17 @@
       @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
       @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
       @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      @import url('https://fonts.googleapis.com/css?family=Libre+Baskerville');
+      @import url('https://fonts.googleapis.com/css?family=Righteous');
+      @import url('https://fonts.googleapis.com/css?family=EB+Garamond');
+      @import url('https://fonts.googleapis.com/css?family=Caveat');
+      @import url('https://fonts.googleapis.com/css?family=Kalam');
 
-      body { font-family: 'Droid Serif'; }
+      body { font-family: 'Kalam'; }
       h1, h2, h3, h4, h5 {
-        font-family: 'Yanone Kaffeesatz';
+        font-family: 'Caveat';
         font-weight: normal;
+        text-shadow: 1px 2px 2px grey;
       }
       .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
 
@@ -21,7 +27,7 @@
       }
 
       #tab01 td, #tab01 th {
-        border: 2px solid #ddd;
+        border-bottom: 1px solid #ddd;
         padding: 8px;
       }
 
@@ -32,10 +38,11 @@
       #tab01 tr:hover {background-color: #ddd;}
 
       #tab01 th {
-        padding-top: 12px;
-        padding-bottom:12px;
+        padding-top: 8px;
+        padding-bottom:8px;
         text-align: center;
-        background: #528ae5;
+        background: #555555;
+        color: #f2f2f2;
       }
 
       #tab01 td {
@@ -264,14 +271,21 @@ There are some ways :
 $$ P = TP + FN, ~ N = FP + TN $$
 
 --
+<br/>
 
 * Accuracy
 $$ ACC = \frac{TP+TN}{P + N} $$
 
 --
 
+<br/>
+
 * Sensitivity, Recall, True positive rate
 $$ TPR = \frac{TP}{P} $$
+
+---
+
+### Confusion Index
 
 --
 
@@ -357,6 +371,9 @@ We need more precise way to determine better classifier
 --
 
 * Matthew's Correlation Coefficient
+
+
+<br/>
 
 $$ MCC = \frac{TP \times TN - FP \times FN}{\sqrt{(TP + FP)(TP + FN)(TN + FP)(TN + FN)}}$$
 
@@ -591,7 +608,7 @@ $$ p(x) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left( \frac{-(x-\mu)^2}{2\sigma^2} \
 
 --
 
-$$p(\mathbf{x}) = \frac{1}{(2\pi)^{d/2}|\mathbf{\Sigma}|^{1/2}} \exp \( -\frac{1}{2} (\mathbf{x} - \mu)^T\mathbf{\Sigma}^{-1}(\mathbf{x} - \mu) \) $$
+$$p(\mathbf{x}) = \frac{1}{(2\pi)^{d/2}|\mathbf{\Sigma}|^{1/2}} \exp \left( -\frac{1}{2} (\mathbf{x} - \mu)^T\mathbf{\Sigma}^{-1}(\mathbf{x} - \mu) \right) $$
 
 ---
 
