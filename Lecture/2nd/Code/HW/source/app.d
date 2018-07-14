@@ -4,20 +4,23 @@ import dnum.vector;
 import dnum.stats;
 
 void main() {
-  auto a = Vector(1,10,2);
-  a.writeln;
-  auto b = runif(5, -1, 1);
-  b.writeln;
-  cbind(a,b).writeln;
-  rbind(a,b).writeln;
-  b.mean.writeln;
+  auto w = weightsInit(3,1);
+  w.writeln;
 }
 
-// Matrix weightsInit(int m, int n) {
-  
-// }
+Matrix weightsInit(int m, int n) {
+  auto w = runif(m, -1, 1);
+  if (n == 1) {
+    return w;
+  } else {
+    foreach(i; 1 .. n) {
+      w = cbind(w, runif(m, -1, 1));
+    }
+    return w;
+  }
+}
 
-Vector runif(int n, double a, double b) {
+Matrix runif(int n, double a, double b) {
   import std.random : Random, unpredictableSeed;
 
   auto rnd = Random(unpredictableSeed);
@@ -29,5 +32,5 @@ Vector runif(int n, double a, double b) {
     w[i] = uniform!"()"(a, b, rnd);
   }
 
-  return Vector(w);
+  return Matrix(w, n, 1);
 }
