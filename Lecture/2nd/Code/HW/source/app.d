@@ -19,12 +19,15 @@ void main() {
 
 Vector runif(int n, double a, double b) {
   import std.random : Random, unpredictableSeed;
-  import std.array : array;
-  import std.range : generate, takeExactly;
 
   auto rnd = Random(unpredictableSeed);
 
-  double[] w = generate!(() => uniform(a, b)).takeExactly(n).array;
+  double[] w;
+  w.length = n;
+
+  foreach(i; 0 .. n) {
+    w[i] = uniform!"()"(a, b, rnd);
+  }
 
   return Vector(w);
 }
