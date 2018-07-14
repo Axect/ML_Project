@@ -1,6 +1,7 @@
 import std.stdio;
 import std.random : uniform;
 import dnum.vector;
+import dnum.stats;
 
 void main() {
   auto a = Vector(1,10,2);
@@ -9,6 +10,7 @@ void main() {
   b.writeln;
   cbind(a,b).writeln;
   rbind(a,b).writeln;
+  b.mean.writeln;
 }
 
 // Matrix weightsInit(int m, int n) {
