@@ -6,10 +6,27 @@ import dnum.stats;
 void main() {
   auto w = weightsInit(3,1);
   w.writeln;
-  auto f = Vectorize(s => activation(s));
-  f(w.val).writeln;
-  auto g = VectorizeM(s => activation(s));
-  g(w).writeln;
+
+  auto x = Matrix([
+    [-1, 0, 0],
+    [-1, 1, 0],
+    [-1, 0, 1],
+    [-1, 1, 1],
+  ]);
+
+  auto t = Matrix([
+    [0],
+    [1],
+    [1],
+    [1],
+  ]);
+
+  auto y = train(w, x, t, 0.25, 10);
+  y.writeln;
+  // auto f = Vectorize(s => activation(s));
+  // f(w.val).writeln;
+  // auto g = VectorizeM(s => activation(s));
+  // g(w).writeln;
 }
 
 Matrix weightsInit(int m, int n) {
@@ -30,8 +47,23 @@ double activation(double s) {
 
 Matrix output(Matrix weights, Matrix input) {
   auto s = input % weights;
-  s.val.fmap_void(x => activation(x));
-  return s;
+  auto g = VectorizeM(x => activation(x));
+  return g(s);
+}
+
+Matrix update(Matrix weights, Matrix input, Matrix answer, double eta = 0.25) {
+  auto y = output(weights, input);
+  auto w = weights - (input.transpose % (y - answer)) * eta;
+  return w;
+}
+
+Matrix train(Matrix weights, Matrix input, Matrix answer, double eta = 0.25, int times = 10) {
+  auto w = weights;
+  foreach(i; 0 .. times - 1) {
+    w = update(w, input, answer, eta);
+    w.writeln;
+  }
+  return output(w, input);
 }
 
 // =============================================================================
