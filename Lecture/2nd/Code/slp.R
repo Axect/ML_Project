@@ -6,7 +6,7 @@
 weights_init <- function(m, n) {
     w <- runif(m, -1, 1)
     if(n==1) {
-        return(w) # 1 * m matrix
+        return(w) # m x 1 matrix
     } else {
         for (i in 2:n) {
             w <- cbind(w, runif(m, -1, 1))
@@ -30,7 +30,7 @@ output <- function(weights, input) {
 
 update <- function(weights, input, answer, eta = 0.25) {
     y <- output(weights, input)
-    w <- weights - eta * (t(x) %*% (y - answer))
+    w <- weights - eta * (t(input) %*% (y - answer))
     return(w)
 }
 
