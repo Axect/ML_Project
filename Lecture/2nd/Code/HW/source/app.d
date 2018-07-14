@@ -3,10 +3,12 @@ import std.random : uniform;
 import dnum.vector;
 
 void main() {
-  auto a = Vector(1,10);
+  auto a = Vector(1,10,2);
   a.writeln;
   auto b = runif(5, -1, 1);
   b.writeln;
+  cbind(a,b).writeln;
+  rbind(a,b).writeln;
 }
 
 // Matrix weightsInit(int m, int n) {
