@@ -1,7 +1,7 @@
-import std.stdio;
-import std.random : uniform;
+import std.stdio : writeln;
 import dnum.vector;
 import dnum.stats;
+import dnum.utils;
 
 void main() {
   auto w = weightsInit(3,1);
@@ -54,30 +54,4 @@ Matrix train(Matrix weights, Matrix input, Matrix answer, double eta = 0.25, int
     w.writeln;
   }
   return output(w, input);
-}
-
-// =============================================================================
-// Should be implemented in DNumeric
-// =============================================================================
-Matrix runif(int n, double a, double b) {
-  import std.random : Random, unpredictableSeed;
-
-  auto rnd = Random(unpredictableSeed);
-
-  double[] w;
-  w.length = n;
-
-  foreach(i; 0 .. n) {
-    w[i] = uniform!"()"(a, b, rnd);
-  }
-
-  return Matrix(w, n, 1);
-}
-
-Vector delegate(Vector) Vectorize(double delegate(double) f) {
-  return (v => v.fmap(f));
-}
-
-Matrix delegate(Matrix) VectorizeM(double delegate(double) f) {
-  return (v => Matrix(v.val.fmap(f), v.row, v.col, v.byRow));
 }
