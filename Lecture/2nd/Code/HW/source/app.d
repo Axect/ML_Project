@@ -13,15 +13,10 @@ void main() {
     [-1, 0, 1],
     [-1, 1, 1],
   ]);
-
-  auto t = Matrix([0, 1, 1, 1], 4, 1);
-
+  auto t = Matrix([0, 1, 1, 1], 4, 1); 
   auto y = train(w, x, t, 0.25, 10);
+  
   y.writeln;
-  // auto f = Vectorize(s => activation(s));
-  // f(w.val).writeln;
-  // auto g = VectorizeM(s => activation(s));
-  // g(w).writeln;
 }
 
 Matrix weightsInit(int m, int n) {
