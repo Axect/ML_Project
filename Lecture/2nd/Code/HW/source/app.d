@@ -14,7 +14,7 @@ void main() {
     [-1, 1, 1],
   ]);
   auto t = Matrix([0, 1, 1, 1], 4, 1); 
-  auto y = train(w, x, t, 0.25, 10);
+  auto y = train(w, x, t, 0.25, 100);
   
   y.writeln;
 }
