@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Multi Layer Perceptron</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      @import url('https://fonts.googleapis.com/css?family=Libre+Baskerville');
+      @import url('https://fonts.googleapis.com/css?family=Righteous');
+      @import url('https://fonts.googleapis.com/css?family=EB+Garamond');
+      @import url('https://fonts.googleapis.com/css?family=Caveat');
+      @import url('https://fonts.googleapis.com/css?family=Kalam');
+
+      body { font-family: 'Kalam'; }
+      h1, h2, h3, h4, h5 {
+        font-family: 'Caveat';
+        font-weight: normal;
+        text-shadow: 1px 2px 2px grey;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+
+      #tab01 {
+        border-collapse: collapse;
+        width: 80%;
+      }
+
+      #tab01 td, #tab01 th {
+        border-bottom: 1px solid #ddd;
+        padding: 8px;
+      }
+
+      #tab01 tr:nth-child(even){
+        background-color: #f2f2f2;
+      }
+
+      #tab01 tr:hover {background-color: #ddd;}
+
+      #tab01 th {
+        padding-top: 8px;
+        padding-bottom:8px;
+        text-align: center;
+        background: #555555;
+        color: #f2f2f2;
+      }
+
+      #tab01 td {
+        text-align:center;
+      }
+
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Multi Layer Perceptron
+
+<h3 style="color: darkblue">Tae Geun Kim</h3>
+
+---
+
+## Table of Contents
+
+--
+
+* What can be done by perceptron?
+
+--
+
+* What can't be done by perceptron?
+
+--
+
+* Linear Regression
+
+--
+
+* Multi Layer Perceptron
+
+---
+
+class: center, middle
+
+# What can be done by perceptron?
+
+---
+
+## What perceptron really do?
+
+--
+
+### <font color="blue">Linear Discrimination!</font>
+
+--
+
+<img src="p_vs_svm.png" alt="p_vs_svm" width="100%">
+
+---
+
+```d
+// D Code of Single Layer Perceptron
+Matrix output(Matrix weights, Matrix input) {
+  auto s = input % weights;
+  auto g = VectorizeM(x => activation(x));
+  return g(s);
+}
+```
+
+--
+
+Output :
+
+$$ y\_j = g\left(\sum\_i x\_i w\_{ij} \right) $$
+
+--
+
+* Guess is just linear - inner product of weight and input.
+
+--
+
+* Thus, perceptron do linear sepeartion (or discrimination)
+
+---
+
+class: center, middle
+
+# What can't be done by perceptron?
+
+---
+
+## What perceptron can't do?
+
+--
+
+### <font color="red">Just non-linear</font>
+
+--
+
+.center[<img src="perceptron_xor.png" alt="xor" width="60%">]
+
+---
+
+### Example - XOR
+
+<table id="tab01" align="center">
+  <tr>
+    <th>\(In_1\)</th>
+    <th>\(In_2\)</th>
+    <th>\(t\)</th>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>0</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>1</td>
+    <td>0</td>
+  </tr>
+</table>
+
+--
+
+<br>
+
+Q. Can perceptron learning this example?
+
+--
+No! But..
+
+---
+
+### Example - XOR (3D)
+
+<table id="tab01" align="center">
+  <tr>
+    <th>\(In_1\)</th>
+    <th>\(In_2\)</th>
+    <th>\(In_3\)</th>
+    <th>\(t\)</th>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>0</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+</table>
+
+--
+
+<br>
+
+For high dimension, we can classify non linear example!
+
+---
+
+class: center, middle
+
+## Homework #2
+
+<p style="font-size:24px">Apply your perceptron code to 3D XOR example</p>
+
+<br/>
+
+---
+
+class: center, middle
+
+# Linear Regression
+
+---
+
+## Linear Regression
+
+.center[<img src="linear.png" alt="linear" width="80%">]
+
+---
+
+## Linear Regression
+
+### How to?
+
+* Least Square Method - Minimize RSS
+
+--
+$$ RSS = \sum\_{j=0}^N \left(t\_j - \sum\_{i=0}^m \beta\_i x\_{ij}\right)^2 $$
+
+--
+* Matrix Form
+
+--
+$$ RSS = (\mathbf{t} - \mathbf{X\beta})^T (\mathbf{t} - \mathbf{X\beta})$$
+
+--
+* X = N x m - Like Input of perceptron with bias node
+
+--
+* `\(\beta\)` = m x n
+
+--
+* t = N x n
+
+---
+
+## Linear Regression
+
+### How to?
+
+--
+
+* Find `\(\beta\)` which minimizes RSS
+
+$$\beta = \mathbf{(X^T X)^{-1} X^T t} $$
+
+--
+
+* For input vector `\(\mathbf{z}\)`, output become `\(\mathbf{z\beta}\)` 
+
+--
+  * `\(\beta\)` = m x n
+
+--
+  * z = N x m
+
+--
+  * z`\(\beta\)` = N x n
+
+---
+
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured" type="text/javascript"></script>
+
+    <script>
+      var slideshow = remark.create();
+
+      MathJax.Hub.Config({
+          tex2jax: {
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+          }
+      });
+
+      MathJax.Hub.Configured();
+    </script>
+  </body>
+</html>
