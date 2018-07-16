@@ -383,13 +383,219 @@ We need more neurons!
 
 <img src="mlp_xor.png" alt="mlp_xor" width="100%">
 
+---
+
+## Multi-Layer Perceptron
+
+### How to?
+
+--
+
+* Forward
+
+--
+
+* Backward
+
+--
+
+* Recall
+
+---
+
+## Backward
+
+--
+
+* We should find where error is
+
+--
+  * Errors should have same sign!
+
+--
+  
+$$ E(\mathbf{t, y}) = \frac{1}{2}\sum\_{k=1}^N (y\_k - t\_k)^2 $$
+
+--
+
+* We use **gradient descent method**
+
+--
+  * Activation function also differentiable!
+
+--
+  * But our activation function (signum function) is not differentiable
+
+--
+  * Need new activation functions!
+
+---
+
+## Backward
+
+There are two candidates
+
+--
+
+<img src="sigmoid_tanh.png" alt="sigmoid_tanh" width="100%">
+
+---
+
+## Backward
+
+* Sigmoid
+
+$$ \sigma\_{\beta}(x) = \frac{1}{1 + e^{-\beta x}} $$
+
+--
+
+* Tanh
+
+$$ \tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}} $$
+
+--
+
+<br>
+
+Why use these?
+
+--
+`\(\rightarrow\)` Differentiable & Easy to classify
+
+---
+
+### Gradient Descent
+
+<img src="grad_2d.png" alt="grad_2d" width="100%">
+
+---
+
+### Gradient Descent
+
+<img src="grad_3d.png" alt="grad_3d" width="100%">
+
+---
+
+### Gradient Descent
+
+--
+
+* Sum of Squared Errors (SSE)
+
+$$ E(\mathbf{w}) = \frac{1}{2}\sum\_{k=1}^N (y\_k - t\_k)^2 $$
+
+--
+
+* Partial derivative
+
+\begin{align}
+  \frac{\partial E}{\partial w\_{pq}} &= \frac{\partial}{\partial w\_{pq}}\left(\frac{1}{2}\sum\_{k=1}^N (y\_k - t\_k)^2 \right) \\\
+  &= \frac{1}{2}\sum\_{k=1}^N 2(y\_k - t\_k) \frac{\partial}{\partial w\_{pq}}\left(\sum\_{i=0}^L w\_{ik}x\_i - t\_k \right) \\\
+  &= \sum\_{k=1}^N (y\_k - t\_k) x\_p \delta\_{kq} \\\
+  &= x\_p (y\_q - t\_q)
+\end{align}
+
+---
+
+### Gradient Descent
+
+* Update weight by gradient descent
+\begin{align}
+  w\_{pq} &\rightarrow w\_{pq} - \eta \frac{\partial E}{\partial w\_{pq}} \\\
+  w\_{pq} &\rightarrow w\_{pq} - \eta ~ x\_p(y\_q - t\_q) \\\
+  \mathbf{w} &\rightarrow \mathbf{w} - \eta ~ \mathbf{x}^T (\mathbf{y - t})
+\end{align}
+
+--
+  * `\(y_q = \sum w_{pq} x_p\)`
+
+--
+  * Then.. where is activation?
+
+---
+
+### Activation Function
+
+Conditions of activation function
+
+--
+
+* Differentiable
+
+--
+
+* Convergent at both sides
+
+--
+
+* Rapidly change at middle
+
+--
+
+<br>
+
+Sigmoid Function
+
+$$ a = g(h) = \frac{1}{1 + e^{-\beta h}} $$
+
+---
+
+### Activation Function
+
+Q. What is derivative of sigmoid?
+
+--
+
+$$ g'(h) = \beta a (1-a) $$
+
+--
+
+pf)
+
+--
+ It is trivial
+
+---
+
+### Error Back-Propagation
+
+--
+
+* Let's use chain rule
+$$ \frac{\partial E}{\partial w\_{pq}} = \frac{\partial E}{\partial h\_q} \frac{\partial h\_q}{\partial w\_{pq}}$$
+
+--
+  * `\(h_q\)` is input of qth output neuron
+  $$ h\_q = \sum\_{j=0}^M w\_{jq}a\_j $$
+
+--
+  * Change weight `\(\rightarrow\)` Change input `\(\rightarrow\)` Change Error
+
+---
+
+### Error Back-Propagation
+
+* Secondary term
+
+$$ \frac{\partial h\_q}{\partial w\_{pq}} = \frac{\partial \sum\_{j=0}^M w\_{jq}a\_j}{\partial w\_{pq}} = a\_{p}$$
+
+--
+
+* Primary term (Important!)
+
+$$ \delta\_o(q) \equiv \frac{\partial E}{\partial h\_q^{\text{output}}} $$
+
+--
+
+$$
 
 
-
+---
     </textarea>
-    <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+    <!-- <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured" type="text/javascript"></script>
-
+    <script src="./remark-latest.min.js"></script>
+    <!-- <script src="./MathJax.js" type="text/javascript"></script> -->
     <script>
       var slideshow = remark.create();
 
