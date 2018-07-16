@@ -287,18 +287,98 @@ $$\beta = \mathbf{(X^T X)^{-1} X^T t} $$
 
 --
 
-* For input vector `\(\mathbf{z}\)`, output become `\(\mathbf{z\beta}\)` 
+* For input vector `\(\mathbf{X}\)`, output become `\(\mathbf{X\beta}\)` 
 
 --
   * `\(\beta\)` = m x n
 
 --
-  * z = N x m
+  * X = N x m
 
 --
-  * z`\(\beta\)` = N x n
+  * X`\(\beta\)` = N x n
 
 ---
+
+class: center, middle
+
+## Homework #3
+
+<p style="font-size:24px">Implement Linear regression in your language and apply to OR example</p>
+
+<br/>
+
+---
+
+## Hint - R Code
+
+--
+
+So Simple
+
+```R
+linreg <- function(input, target) {
+  x <- input
+  xt <- t(x)
+  beta <- solve(xt %*% x) %*% (xt %*% target)
+  return(input %*% beta)
+}
+```
+
+--
+
+Apply OR Example
+
+```R
+x <- matrix(0, 4, 3)
+
+x[,1] = -1 # Bias
+x[,2] = c(0,1,0,1)
+x[,3] = c(0,0,1,1)
+
+t <- c(0,1,1,1)
+
+y <- linreg(x, t)
+```
+
+---
+
+class: center, middle
+
+# Multi-Layer Perceptron
+
+---
+
+### Limitation of Single Layer Perceptron
+
+--
+
+* Can apply only linear case
+
+--
+
+* But, in real, non linear cases are dominant
+
+--
+
+<br>
+
+We need more neurons!
+
+--
+
+### .center[<font color="blue">Multi-Layer Perceptron</font>]
+
+---
+
+## Multi-Layer Perceptron
+
+--
+
+<img src="mlp_bias.jpg" alt="mlp_bias" width="100%">
+
+---
+
 
 
 
