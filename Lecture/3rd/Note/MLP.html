@@ -489,10 +489,10 @@ $$ E(\mathbf{w}) = \frac{1}{2}\sum\_{k=1}^N (y\_k - t\_k)^2 $$
 * Partial derivative
 
 \begin{align}
-  \frac{\partial E}{\partial w\_{pq}} &= \frac{\partial}{\partial w\_{pq}}\left(\frac{1}{2}\sum\_{k=1}^N (y\_k - t\_k)^2 \right) \\\
-  &= \frac{1}{2}\sum\_{k=1}^N 2(y\_k - t\_k) \frac{\partial}{\partial w\_{pq}}\left(\sum\_{i=0}^L w\_{ik}x\_i - t\_k \right) \\\
-  &= \sum\_{k=1}^N (y\_k - t\_k) x\_p \delta\_{kq} \\\
-  &= x\_p (y\_q - t\_q)
+  \frac{\partial E}{\partial w\_{qr}} &= \frac{\partial}{\partial w\_{qr}}\left(\frac{1}{2}\sum\_{k=1}^N (y\_k - t\_k)^2 \right) \\\
+  &= \frac{1}{2}\sum\_{k=1}^N 2(y\_k - t\_k) \frac{\partial}{\partial w\_{qr}}\left(\sum\_{i=0}^L w\_{ik}x\_i - t\_k \right) \\\
+  &= \sum\_{k=1}^N (y\_k - t\_k) x\_q \delta\_{kr} \\\
+  &= x\_q (y\_r - t\_r)
 \end{align}
 
 ---
@@ -501,16 +501,19 @@ $$ E(\mathbf{w}) = \frac{1}{2}\sum\_{k=1}^N (y\_k - t\_k)^2 $$
 
 * Update weight by gradient descent
 \begin{align}
-  w\_{pq} &\rightarrow w\_{pq} - \eta \frac{\partial E}{\partial w\_{pq}} \\\
-  w\_{pq} &\rightarrow w\_{pq} - \eta ~ x\_p(y\_q - t\_q) \\\
+  w\_{qr} &\rightarrow w\_{qr} - \eta \frac{\partial E}{\partial w\_{qr}} \\\
+  w\_{qr} &\rightarrow w\_{qr} - \eta ~ x\_q(y\_r - t\_r) \\\
   \mathbf{w} &\rightarrow \mathbf{w} - \eta ~ \mathbf{x}^T (\mathbf{y - t})
 \end{align}
 
 --
-  * `\(y_q = \sum w_{pq} x_p\)`
+  * `\(y_r = \sum w_{qr} x_q\)`
 
 --
   * Then.. where is activation?
+
+--
+  * We should modify these!
 
 ---
 
@@ -557,38 +560,105 @@ pf)
 
 ---
 
-### Error Back-Propagation
+### Error Back-Propagation <font size="5">(Hidden to Output)</font>
 
 --
 
 * Let's use chain rule
-$$ \frac{\partial E}{\partial w\_{pq}} = \frac{\partial E}{\partial h\_q} \frac{\partial h\_q}{\partial w\_{pq}}$$
+$$ \frac{\partial E}{\partial w\_{qr}} = \sum\_{k=1}^N\frac{\partial E}{\partial h\_k} \frac{\partial h\_k}{\partial w\_{qr}}$$
 
 --
-  * `\(h_q\)` is input of qth output neuron
-  $$ h\_q = \sum\_{j=0}^M w\_{jq}a\_j $$
+  * `\(h_k\)` is input of kth output neuron
+  $$ h\_k = \sum\_{j=0}^M w\_{jk}a\_j $$
 
 --
   * Change weight `\(\rightarrow\)` Change input `\(\rightarrow\)` Change Error
 
 ---
 
-### Error Back-Propagation
+### Error Back-Propagation <font size="5">(Hidden to Output)</font>
 
 * Secondary term
 
-$$ \frac{\partial h\_q}{\partial w\_{pq}} = \frac{\partial \sum\_{j=0}^M w\_{jq}a\_j}{\partial w\_{pq}} = a\_{p}$$
+$$ \frac{\partial h\_k}{\partial w\_{qr}} = \frac{\partial}{\partial w\_{qr}} \sum\_{j=0}^M w\_{jk}a\_j = a\_{q}\delta\_{kr}$$
 
 --
 
 * Primary term (Important!)
+$$ \delta\_o(r) \equiv \frac{\partial E}{\partial h\_r^{\text{output}}} $$
 
-$$ \delta\_o(q) \equiv \frac{\partial E}{\partial h\_q^{\text{output}}} $$
+--
+  * Use Chain rule
+
+\begin{align}
+  \delta\_o(r) &= \sum\_{k=1}^{N}\frac{\partial E}{\partial y\_k}\frac{\partial y\_k}{\partial h\_r^{o}} \\\
+  &= \sum\_{k=1}^{N}\frac{\partial E}{\partial y\_k} g'(h\_k^o) \delta\_{kr} = \frac{\partial E}{\partial y\_r}g'(h\_r^o)
+\end{align}
+
+---
+
+* Continue
+\begin{align}
+  &= \frac{\partial}{\partial y\_r} \left[ \frac{1}{2} \sum\_{k=1}^N \left( y\_k - t\_k \right)^2 \right] g'(h\_r^o) \\\
+  &= \left( y\_r - t\_r \right) g'(h\_r^o) \\\
+  &= (y\_r - t\_r) g'(h\_r^o)  \\\
+  \\\
+  \therefore \delta\_o(r) &= (y\_r - t\_r) g'(h\_r^o) 
+\end{align}
 
 --
 
-$$
+* Semi-result
+\begin{align}
+  w\_{qr} ~ &\leftarrow ~ w\_{qr} - \eta \frac{\partial E}{\partial w\_{qr}} \\\
+  &= ~ w\_{qr} - \eta \sum\_{k=1}^N \delta\_o(k)a\_q \delta\_{kr} \\\
+  &= w\_{qr} - \eta a\_q \delta\_o(r) \\\
+  &= w\_{qr} - \eta a\_q (y\_r - t\_r) y\_r'
+\end{align}
 
+---
+
+### Error Back-Propagation <font size="5">(Input to Hidden)</font>
+
+* Also use chain rule
+
+\begin{align}
+  \delta\_h(q) &= \sum\_{k=1}^N \frac{\partial E}{\partial h\_k^o}\frac{\partial h\_k^o}{\partial h\_q^h} \\\
+  &= \sum\_{k=1}^N \delta\_o(k) \frac{\partial h\_k^o}{\partial h\_q^h}
+\end{align}
+
+--
+
+* We know
+
+$$ h\_k^o = \sum\_{j=0}^M w\_{jk}a\_j= \sum\_{j=0}^M w\_{jk}g(h\_j^h) $$
+
+--
+
+* Thus
+
+$$ \frac{\partial h\_k^o}{\partial h\_q^h} = w\_{qk} g'(h\_q^h) = w\_{qk} a\_{q}'$$
+
+---
+
+### Error Back-Propagation <font size="5">(Input to Hidden)</font>
+
+* Therefore
+
+\begin{align}
+  \delta\_h(q) &= a\_q' \sum\_{k=1}^N \delta\_o(k) w\_{qk} \\\
+  &= a\_q' \sum\_{k=1}^N w\_{qk} (y\_k - t\_k) y\_k'
+\end{align}
+
+--
+
+* Conclusion
+
+\begin{align}
+  v\_{pq} ~ &\leftarrow ~ v\_{pq} - \eta \frac{\partial E}{\partial v\_{pq}} \\\
+  &= v\_{pq} - \eta x\_p\delta\_h(q)\\\
+  &= v\_{pq} - \eta x\_p a\_q' \left( \sum\_{k=1}^N \delta\_o(k) w\_{qk} \right)
+\end{align}
 
 ---
     </textarea>
