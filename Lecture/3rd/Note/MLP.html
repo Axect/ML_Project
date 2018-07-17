@@ -560,6 +560,39 @@ pf)
 
 ---
 
+### Basic MLP
+
+--
+
+.center[<img src="mlp.JPG" alt="mlp" width="90%">]
+
+---
+
+### Basic MLP
+
+* Forward
+
+--
+$$ h\_j^{\text{hidden}} = \sum\_{i=0}^L v\_{ij}x\_i $$
+
+--
+$$ a\_j = g\_1(h\_j^h) $$
+
+--
+$$ h\_k^{\text{output}} = \sum\_{j=0}^M w\_{jk}a\_j $$
+
+--
+$$ y\_k = g\_2(h\_k^o) $$
+
+--
+* Backward..?
+
+--
+`\(\rightarrow\)` Error Back-Propagation!
+
+
+---
+
 ### Error Back-Propagation <font size="5">(Hidden to Output)</font>
 
 --
@@ -592,18 +625,17 @@ $$ \delta\_o(r) \equiv \frac{\partial E}{\partial h\_r^{\text{output}}} $$
 
 \begin{align}
   \delta\_o(r) &= \sum\_{k=1}^{N}\frac{\partial E}{\partial y\_k}\frac{\partial y\_k}{\partial h\_r^{o}} \\\
-  &= \sum\_{k=1}^{N}\frac{\partial E}{\partial y\_k} g'(h\_k^o) \delta\_{kr} = \frac{\partial E}{\partial y\_r}g'(h\_r^o)
+  &= \sum\_{k=1}^{N}\frac{\partial E}{\partial y\_k} g\_2'(h\_k^o) \delta\_{kr} = \frac{\partial E}{\partial y\_r}g\_2'(h\_r^o)
 \end{align}
 
 ---
 
 * Continue
 \begin{align}
-  &= \frac{\partial}{\partial y\_r} \left[ \frac{1}{2} \sum\_{k=1}^N \left( y\_k - t\_k \right)^2 \right] g'(h\_r^o) \\\
-  &= \left( y\_r - t\_r \right) g'(h\_r^o) \\\
-  &= (y\_r - t\_r) g'(h\_r^o)  \\\
+  &= \frac{\partial}{\partial y\_r} \left[ \frac{1}{2} \sum\_{k=1}^N \left( y\_k - t\_k \right)^2 \right] g\_2'(h\_r^o) \\\
+  &= \left( y\_r - t\_r \right) g\_2'(h\_r^o) \\\
   \\\
-  \therefore \delta\_o(r) &= (y\_r - t\_r) g'(h\_r^o) 
+  \therefore \delta\_o(r) &= (y\_r - t\_r) g\_2'(h\_r^o) 
 \end{align}
 
 --
@@ -613,7 +645,7 @@ $$ \delta\_o(r) \equiv \frac{\partial E}{\partial h\_r^{\text{output}}} $$
   w\_{qr} ~ &\leftarrow ~ w\_{qr} - \eta \frac{\partial E}{\partial w\_{qr}} \\\
   &= ~ w\_{qr} - \eta \sum\_{k=1}^N \delta\_o(k)a\_q \delta\_{kr} \\\
   &= w\_{qr} - \eta a\_q \delta\_o(r) \\\
-  &= w\_{qr} - \eta a\_q (y\_r - t\_r) y\_r'
+  &= w\_{qr} - \eta a\_q (y\_r - t\_r) g\_2'(h\_r^o)
 \end{align}
 
 ---
@@ -631,13 +663,13 @@ $$ \delta\_o(r) \equiv \frac{\partial E}{\partial h\_r^{\text{output}}} $$
 
 * We know
 
-$$ h\_k^o = \sum\_{j=0}^M w\_{jk}a\_j= \sum\_{j=0}^M w\_{jk}g(h\_j^h) $$
+$$ h\_k^o = \sum\_{j=0}^M w\_{jk}a\_j= \sum\_{j=0}^M w\_{jk}g\_1(h\_j^h) $$
 
 --
 
 * Thus
 
-$$ \frac{\partial h\_k^o}{\partial h\_q^h} = w\_{qk} g'(h\_q^h) = w\_{qk} a\_{q}'$$
+$$ \frac{\partial h\_k^o}{\partial h\_q^h} = w\_{qk} g\_1'(h\_q^h) $$
 
 ---
 
@@ -646,8 +678,8 @@ $$ \frac{\partial h\_k^o}{\partial h\_q^h} = w\_{qk} g'(h\_q^h) = w\_{qk} a\_{q}
 * Therefore
 
 \begin{align}
-  \delta\_h(q) &= a\_q' \sum\_{k=1}^N \delta\_o(k) w\_{qk} \\\
-  &= a\_q' \sum\_{k=1}^N w\_{qk} (y\_k - t\_k) y\_k'
+  \delta\_h(q) &= g\_1'(h\_q^h) \sum\_{k=1}^N \delta\_o(k) w\_{qk} \\\
+  &= g\_1'(h\_q^h) \sum\_{k=1}^N w\_{qk} (y\_k - t\_k) g\_2'(h\_k^o)
 \end{align}
 
 --
@@ -657,8 +689,57 @@ $$ \frac{\partial h\_k^o}{\partial h\_q^h} = w\_{qk} g'(h\_q^h) = w\_{qk} a\_{q}
 \begin{align}
   v\_{pq} ~ &\leftarrow ~ v\_{pq} - \eta \frac{\partial E}{\partial v\_{pq}} \\\
   &= v\_{pq} - \eta x\_p\delta\_h(q)\\\
-  &= v\_{pq} - \eta x\_p a\_q' \left( \sum\_{k=1}^N \delta\_o(k) w\_{qk} \right)
+  &= v\_{pq} - \eta x\_p g\_1'(h\_q^h) \left( \sum\_{k=1}^N \delta\_o(k) w\_{qk} \right)
 \end{align}
+
+---
+
+### MLP Algorithm
+
+--
+
+* Initialization : All weights (v, w) as small random number
+
+--
+* Training :
+
+--
+  * Forward :
+  $$ h\_j^\text{h} = \sum\_{i=0}^L x\_i v\_{ij} ~ \rightarrow ~ a\_j = g\_1(h\_j^\text{h})$$
+
+--
+  $$ h\_k^\text{o} = \sum\_{j=0}^M a\_j w\_{jk} ~ \rightarrow ~ y\_k = g\_2(h\_k^\text{o})$$
+
+---
+
+
+### MLP Algorithm
+
+
+* Initialization : All weights (v, w) as small random number
+* Training :
+  * Backward :
+
+--
+  $$ \delta\_o(k) = (y\_k - t\_k)g\_2'(h\_k^{\text{o}}) $$
+
+--
+  $$ \delta\_h(j) = g\_1'(h\_j^{\text{h}}) \sum\_{k=1}^N w\_{jk}\delta\_o(k) $$
+
+--
+  $$ w\_{jk} ~ \leftarrow ~ w\_{jk} - \eta a\_j\delta\_o(k) $$
+
+--
+  $$ v\_{ij} ~ \leftarrow ~ v\_{ij} - \eta x\_i \delta\_h(j) $$
+
+--
+* Recall : Same as forward
+
+--
+* Repeat all index?
+
+--
+`\(\rightarrow\)` Nope. Just vectorize!
 
 ---
     </textarea>
