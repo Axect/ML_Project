@@ -742,6 +742,91 @@ $$ \frac{\partial h\_k^o}{\partial h\_q^h} = w\_{qk} g\_1'(h\_q^h) $$
 `\(\rightarrow\)` Nope. Just vectorize!
 
 ---
+
+### MLP Algorithm - Vectorize
+
+--
+
+* Objects
+
+--
+  * `\(\bf x\)` : n x L
+
+--
+  * `\(\bf v\)` : L x M
+
+--
+  * `\(\bf h^{h}\)` : n X M
+
+--
+  * `\(\bf a\)` : n x M
+
+--
+  * `\(\bf w\)` : M x N
+
+--
+  * `\(\bf h^{o}\)` : n x N
+
+--
+  * `\(\bf y\)` : n x N
+
+--
+  * `\(\bf t\)` : n x N
+
+--
+  * `\(\bf \delta_h\)` : n x M
+
+--
+  * `\(\bf \delta_o\)` : n x N
+
+---
+
+### MLP Algorithm - Vectorize
+
+
+* Forward
+
+--
+  $$ \bf h^h = x \cdot v $$
+
+--
+  $$ \bf a = g\_1(h^h) $$
+
+--
+  $$ \bf h^o = a \cdot w $$
+
+--
+  $$ \bf y = g\_2(h^o) $$
+
+---
+
+### MLP Algorithm - Vectorize
+
+* Backward
+
+--
+  $$ \bf \delta\_o = (y - t) \* g\_2'(h^o) $$
+
+--
+  $$ \bf \delta\_h = (\delta\_o \cdot w^T) \* g\_1'(h^h) $$
+
+--
+  $$ \bf w ~ \leftarrow ~ w - \eta ~ a^T \cdot \delta\_o $$
+
+--
+  $$ \bf v ~ \leftarrow ~ v - \eta ~x^T \cdot \delta\_h $$
+
+--
+
+<br>
+
+Notice : `\(\bf *\)` means component wise product!
+
+--
+
+* Recall : Same as Forward
+
+---
     </textarea>
     <!-- <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured" type="text/javascript"></script>
