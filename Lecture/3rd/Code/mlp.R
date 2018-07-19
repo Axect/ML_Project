@@ -1,7 +1,10 @@
-# x : n x (L + 1) (input + bias)
+# x : n x L
+# xb : n x (L+1) : add bias
 # v : (L + 1) x M
-# a : n x (M + 1) (Add Bias)
+# a : n x M
+# ab : n x (M+1) : add bias
 # w : (M + 1) x N
+# wb : M x N : remove bias
 # y : n x N
 # t : n x N
 # dh : n x M
@@ -23,10 +26,10 @@ sigmoid <- function(x) {
     return(1/(1 + exp(-x)))
 }
 
-forward <- function(weights, input) {
-    s <- input %*% weights
+forward <- function(weights, inputb) {
+    s <- inputb %*% weights
     g <- sigmoid
-    y <- g(s)
+    y <- g(s) # Numeric functions are automatically vectorized
     return(y)
 }
 
@@ -45,23 +48,23 @@ train <- function(weights1, weights2, input, answer, eta = 0.25, times) {
     v <- weights1 # v = (L+1) x M
     w <- weights2 # w = (M+1) x N
     t <- answer # t = n x N
-    xp <- addBias(x, -1) # xp = n x (L+1)
+    xb <- addBias(x, -1) # xb = n x (L+1)
     for (i in 1:times) {
-        a <- forward(v, xp) # a = n x M
-        ap <- addBias(a, -1) # ap = n x (M+1)
-        y <- forward(w, ap) # y = n x N
+        a <- forward(v, xb) # a = n x M
+        ab <- addBias(a, -1) # ab = n x (M+1)
+        y <- forward(w, ab) # y = n x N
         err <- t(y - t) %*% (y - t) # err = n x n
         # print(err)
-        wp <- hideBias(w) # Remove bias : wp = M x N
+        wb <- hideBias(w) # Remove bias : wb = M x N
         do <- (y - t) * y * (1 - y) # do = n x N
-        dh <- (do %*% t(wp)) * a * (1 - a) # dh = n x M
-        w <- w - eta * (t(ap) %*% do)
-        v <- v - eta * (t(xp) %*% dh)
+        dh <- (do %*% t(wb)) * a * (1 - a) # dh = n x M
+        w <- w - eta * (t(ab) %*% do)
+        v <- v - eta * (t(xb) %*% dh)
     }
     # Recall
-    a <- forward(v, xp)
-    ap <- addBias(a,-1)
-    y <- forward(w, ap)
+    a <- forward(v, xb)
+    ab <- addBias(a,-1)
+    y <- forward(w, ab)
     return(y)
 }
 
