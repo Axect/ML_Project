@@ -1,86 +1,82 @@
-# x : n x L (input)
-# v : L x M
-# a : n x M
-# w : M x N
+# x : n x (L + 1) (input + bias)
+# v : (L + 1) x M
+# a : n x (M + 1) (Add Bias)
+# w : (M + 1) x N
 # y : n x N
 # t : n x N
 # dh : n x M
 # do : n x N
 
 weights_init <- function(m, n) {
-    w <- runif(m, -1, 1)
+    w <- matrix(runif(m, -1, 1), m, 1)
     if(n==1) {
         return(w) # m x 1 matrix
     } else {
         for (i in 2:n) {
             w <- cbind(w, runif(m, -1, 1))
         }
-        return(w)
+        return(w) # m x n matrix
     }
 }
 
-# Only Binary Activation
-activation <- function(s) {
-    ans <- if(s > 0) 1 else 0
-    return(ans)
+sigmoid <- function(x) {
+    return(1/(1 + exp(-x)))
 }
 
 forward <- function(weights, input) {
     s <- input %*% weights
-    g <- Vectorize(activation)
+    g <- sigmoid
     y <- g(s)
     return(y)
 }
 
-sigmoid <- 
+addBias <- function(input, bias) {
+    b <- matrix(bias, nrow(input), 1)
+    return(cbind(b, input))
+}
 
-update <- function(weights1, weights2, input, answer, eta = 0.25) {
-    x <- input
-    v <- weights1
-    w <- weights2
-    t <- answer
-    a <- forward(v, x) # a = g(x %*% v)
-    y <- forward(a, w)
-    do <- (y - t) * a * (1 - a)
+hideBias <- function(weight) {
+    w <- weight[2:nrow(weight),]
     return(w)
 }
 
-train <- function(weights, input, answer, eta = 0.25, times) {
-    w <- weights
-    for (i in 1:(times - 1)) {
-       w <- update(w, input, answer, eta = 0.25)
-       print(w)
+train <- function(weights1, weights2, input, answer, eta = 0.25, times) {
+    x <- input # x = n x L
+    v <- weights1 # v = (L+1) x M
+    w <- weights2 # w = (M+1) x N
+    t <- answer # t = n x N
+    xp <- addBias(x, -1) # xp = n x (L+1)
+    for (i in 1:times) {
+        a <- forward(v, xp) # a = n x M
+        ap <- addBias(a, -1) # ap = n x (M+1)
+        y <- forward(w, ap) # y = n x N
+        err <- t(y - t) %*% (y - t) # err = n x n
+        # print(err)
+        wp <- hideBias(w) # Remove bias : wp = M x N
+        do <- (y - t) * y * (1 - y) # do = n x N
+        dh <- (do %*% t(wp)) * a * (1 - a) # dh = n x M
+        w <- w - eta * (t(ap) %*% do)
+        v <- v - eta * (t(xp) %*% dh)
     }
-    return(output(w, input))
+    # Recall
+    a <- forward(v, xp)
+    ap <- addBias(a,-1)
+    y <- forward(w, ap)
+    return(y)
 }
 
 # ==============================================================================
-# Example - OR
+# Example - XOR
 # ==============================================================================
-w <- weights_init(3,1)
+v <- weights_init(3,2) # 3 x 2
+w <- weights_init(3,1) # 3 x 1
 
-x <- matrix(0, 4, 3)
-x[,1] = -1 # Bias
-x[,2] = c(0,1,0,1)
-x[,3] = c(0,0,1,1)
+x <- matrix(0, 4, 2) # 4 x 2
+x[,1] = c(0, 0, 1, 1)
+x[,2] = c(0, 1, 0, 1)
 
-t <- c(0,1,1,1)
+t <- c(0,1,1,0)
 
-y <- train(w, x, t, 0.25, 100)
+y <- train(v, w, x, t, 0.25, 5000)
 
 print(y)
-
-
-# Sample Plot
-f <- function(x) {
-    w0 <- 0.2356196
-    w1 <- 0.2797721
-    w2 <- 0.2823095
-    return(- w1 / w2 * x + w0 / w2)
-}
-
-plot(f, type='l', xlim=c(0,1), ylim=c(0,1), xlab="In1", ylab="In2")
-points(0,0)
-points(1,0)
-points(0,1)
-points(1,1)
