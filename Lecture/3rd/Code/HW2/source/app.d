@@ -6,7 +6,8 @@ import dnum.utils;
 void main() {
 	auto a = Matrix([[1,2],[3,4]]);
 	a.writeln;
-	a.inv.writeln;
+  auto res = a.lu;
+	res[0].writeln;
+	res[1].writeln;
 	a.writeln;
-	writeln(a % a);
 }
