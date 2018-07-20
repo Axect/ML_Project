@@ -9,5 +9,6 @@ void main() {
   auto res = a.lu;
 	res[0].writeln;
 	res[1].writeln;
+  res[1].invU.writeln;
 	a.writeln;
 }
