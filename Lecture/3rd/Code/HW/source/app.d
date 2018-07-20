@@ -23,7 +23,35 @@ void main() {
 
   auto y = train(w, x, t, 0.25, 20);
   y.writeln;
+
+  // ===========================================================================
+  // OR - Linear Regression
+  // ===========================================================================
+  auto x2 = Matrix([
+    [0, 0],
+    [0, 1],
+    [1, 0],
+    [1, 1],
+  ]);
+  auto t2 = Matrix([
+    [0],
+    [1],
+    [1],
+    [1],
+  ]);
+  auto y2 = linReg(addBias(x2), t2);
+  y2.writeln;
+
+  // ===========================================================================
+  // XOR 3D - Linear Regression
+  // ===========================================================================
+  auto y3 = linReg(addBias(x), t);
+  y3.writeln; // Wonderful!
 }
+
+// =============================================================================
+// Perceptron
+// =============================================================================
 
 Matrix weightInit(int m, int n) {
 	auto w = runif(m, -1, 1);
@@ -67,4 +95,17 @@ Matrix train(Matrix weight, Matrix input, Matrix answer, double eta = 0.25, int 
   }
   auto y = forward(w, xb);
   return y;
+}
+
+// =============================================================================
+// Linear Regression
+// =============================================================================
+
+Matrix linReg(Matrix input, Matrix answer) {
+  auto x = input;
+  auto xt = x.transpose;
+  auto t = answer;
+  auto beta = (xt % x).inv % xt % t;
+
+  return x % beta;
 }
