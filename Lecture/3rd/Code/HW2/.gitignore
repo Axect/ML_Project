@@ -1,0 +1,14 @@
+.dub
+docs.json
+__dummy.html
+docs/
+hw2.so
+hw2.dylib
+hw2.dll
+hw2.a
+hw2.lib
+hw2-test-*
+*.exe
+*.o
+*.obj
+*.lst
