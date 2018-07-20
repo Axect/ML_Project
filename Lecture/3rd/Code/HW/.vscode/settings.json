@@ -1,0 +1,6 @@
+{
+    "dscanner.ignoredKeys": [
+        "dscanner.suspicious.unused_variable",
+        "dscanner.suspicious.unmodified"
+    ]
+}
