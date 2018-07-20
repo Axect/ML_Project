@@ -28,18 +28,7 @@ void main() {
 		[0.4],
 	]);
 
-	q.writeln;
-	t.writeln;
-	
-
-	(q - t).writeln;
-	(q - t).writeln;
-	(q - t).writeln;
-
-	q.writeln;
-	t.writeln;
-
-	auto y = train(v, w, x, t, 0.25, 1);
+	auto y = train(v, w, x, t, 0.25, 5000);
 
 	y.writeln;
 }
