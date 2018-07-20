@@ -14,9 +14,6 @@ void main() {
 		[1, 1],
 	]);
 
-	v.writeln;
-	w.writeln;
-
 	auto t = Matrix([
 		[0],
 		[1],
@@ -24,7 +21,25 @@ void main() {
 		[0],
 	]);
 
-	auto y = train(v, w, x, t, 0.25, 5000);
+	auto q = Matrix([
+		[0.1],
+		[0.2],
+		[0.3],
+		[0.4],
+	]);
+
+	q.writeln;
+	t.writeln;
+	
+
+	(q - t).writeln;
+	(q - t).writeln;
+	(q - t).writeln;
+
+	q.writeln;
+	t.writeln;
+
+	auto y = train(v, w, x, t, 0.25, 1);
 
 	y.writeln;
 }
@@ -75,7 +90,6 @@ Matrix train(Matrix weight1, Matrix weight2, Matrix input, Matrix answer, double
 		auto a = forward(v, xb);
 		auto ab = addBias(a, -1);
 		auto y = forward(w, ab);
-		auto err = (y - t).transpose % (y - t);
 		auto wb = hideBias(w);
 		auto delo = (y - t) * y * (y * (-1) + 1);
 		auto delh = (delo % wb.transpose) * a * (a * (-1) + 1);
