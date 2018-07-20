@@ -28,7 +28,7 @@ void main() {
 		[0.4],
 	]);
 
-	auto y = train(v, w, x, t, 0.25, 5000);
+	auto y = train(v, w, x, t, 0.25, 10000);
 
 	y.writeln;
 }
