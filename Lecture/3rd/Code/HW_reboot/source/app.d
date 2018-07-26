@@ -15,14 +15,8 @@ void main() {
     [1, 1],
   ]);
 
-  auto q = Tensor([1,2,3,4]);
-  q.writeln;
-  (1-q).writeln;
-  (q * (1 - q)).writeln;
-  q.writeln;
-
   auto t = Tensor([0, 1, 1, 0], false);
-  auto y = train(v, w, x, t, 0.25, 10);
+  auto y = train(v, w, x, t, 0.25, 10000);
 
   y.writeln;
 }
@@ -69,18 +63,19 @@ Tensor train(Tensor weight1, Tensor weight2, Tensor input, Tensor answer, double
   auto w = weight2;
   auto t = answer;
   auto xb = x.addBias;
+  Tensor a, ab, y, wb, delo, delh;
   foreach (i; 0 .. times) {
-    auto a = forward(v, xb);
-    auto ab = a.addBias;
-    auto y = forward(w, ab);
-    auto wb = hideBias(w);
-    auto delo = (y - t) * y * (1 - y);
-    auto delh = (delo % wb.transpose) * a * (1 - a);
+    a = forward(v, xb);
+    ab = a.addBias;
+    y = forward(w, ab);
+    wb = hideBias(w);
+    delo = (y - t) * y * (1 - y);
+    delh = (delo % wb.transpose) * a * (1 - a);
     w = w - (ab.transpose % delo) * eta;
     v = v - (xb.transpose % delh) * eta;
   }
-  auto a = forward(v, xb);
-  auto ab = addBias(a, -1);
-  auto y = forward(w, ab);
+  a = forward(v, xb);
+  ab = addBias(a, -1);
+  y = forward(w, ab);
   return y;
 }
