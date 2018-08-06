@@ -120,7 +120,13 @@ $$\bf \beta = (X^T X)^{-1} X^T t $$
 
 ## 2. Programming
 
-Let's see `data.csv`
+First, type below code.
+
+```sh
+wget https://github.com/Axect/ML_Project/raw/master/Lecture/Midterm/data.csv
+```
+
+And let's see  `data.csv`
 
 1. Can we use SLP or linear regression to this data? If not, explain why.
 
