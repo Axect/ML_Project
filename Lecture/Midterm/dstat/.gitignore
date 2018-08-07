@@ -1,0 +1,14 @@
+.dub
+docs.json
+__dummy.html
+docs/
+dstat.so
+dstat.dylib
+dstat.dll
+dstat.a
+dstat.lib
+dstat-test-*
+*.exe
+*.o
+*.obj
+*.lst
