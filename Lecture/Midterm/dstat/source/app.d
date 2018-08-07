@@ -12,4 +12,12 @@ void main() {
 
   auto m = cbind(weight, score).cbind(age);
   m.cmean.writeln;
+  
+  test(1,2,3);
+}
+
+void test(int[] args...) {
+  foreach (i; args) {
+    i.writeln;
+  }
 }
