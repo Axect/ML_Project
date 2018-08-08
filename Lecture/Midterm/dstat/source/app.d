@@ -10,14 +10,18 @@ void main() {
   auto score = Tensor([580,570,590,660,600], false);
   auto age = Tensor([29,33,37,46,55], false);
 
-  auto m = cbind(weight, score).cbind(age);
-  m.cmean.writeln;
-  
-  test(1,2,3);
+  auto m = cbind(weight, score, age);
+
+  // 1. Find Covariance Matrix
+  auto covm = m.cov;
+  covm.writeln;
 }
 
-void test(int[] args...) {
-  foreach (i; args) {
-    i.writeln;
-  }
+auto mahalanobis(Tensor p, Tensor dat) {
+  import std.math : sqrt;
+
+  auto ms = dat.cmean;
+  auto cs = dat.cov;
+  return sqrt(((p - ms).transpose % cs.inv % (p - ms))[0,0]);
 }
+
