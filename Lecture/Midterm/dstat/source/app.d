@@ -13,14 +13,23 @@ void main() {
   auto m = cbind(weight, score, age);
 
   // 1. Find Covariance Matrix
-  auto covm = m.cov;
-  covm.writeln;
+  m.cov.writeln;
+
+  // 2. Correlation
+  m.cor.writeln;
+
+  // 3. Person
+  auto p = Tensor([66, 640, 44], false);
+  //p.writeln;
+  //m.cmean.transpose.writeln;
+  //m.cov.inv.writeln;
+  mahalanobis(p, m).writeln;
 }
 
 auto mahalanobis(Tensor p, Tensor dat) {
   import std.math : sqrt;
 
-  auto ms = dat.cmean;
+  auto ms = dat.cmean.transpose;
   auto cs = dat.cov;
   return sqrt(((p - ms).transpose % cs.inv % (p - ms))[0,0]);
 }
