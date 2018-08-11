@@ -6,9 +6,9 @@ import dnum.linalg;
 import dnum.utils;
 
 void main() {
-  auto weight = Tensor([64,66,68,69,73], false);
-  auto score = Tensor([580,570,590,660,600], false);
-  auto age = Tensor([29,33,37,46,55], false);
+  auto weight = Tensor([64,66,68,69,73], Shape.Col);
+  auto score = Tensor([580,570,590,660,600], Shape.Col);
+  auto age = Tensor([29,33,37,46,55], Shape.Col);
 
   auto m = cbind(weight, score, age);
 
@@ -19,7 +19,7 @@ void main() {
   m.cor.writeln;
 
   // 3. Person
-  auto p = Tensor([66, 640, 44], false);
+  auto p = Tensor([66, 640, 44], Shape.Col);
   //p.writeln;
   //m.cmean.transpose.writeln;
   //m.cov.inv.writeln;
