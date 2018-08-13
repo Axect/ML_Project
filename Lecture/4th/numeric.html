@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Numerical Computing</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      @import url('https://fonts.googleapis.com/css?family=Libre+Baskerville');
+      @import url('https://fonts.googleapis.com/css?family=Righteous');
+      @import url('https://fonts.googleapis.com/css?family=EB+Garamond');
+      @import url('https://fonts.googleapis.com/css?family=Caveat');
+      @import url('https://fonts.googleapis.com/css?family=Kalam');
+
+      body { font-family: 'Kalam'; }
+      h1, h2, h3, h4, h5 {
+        font-family: 'Caveat';
+        font-weight: normal;
+        text-shadow: 1px 2px 2px grey;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+
+      #tab01 {
+        border-collapse: collapse;
+        width: 80%;
+      }
+
+      #tab01 td, #tab01 th {
+        border-bottom: 1px solid #ddd;
+        padding: 8px;
+      }
+
+      #tab01 tr:nth-child(even){
+        background-color: #f2f2f2;
+      }
+
+      #tab01 tr:hover {background-color: #ddd;}
+
+      #tab01 th {
+        padding-top: 8px;
+        padding-bottom:8px;
+        text-align: center;
+        background: #555555;
+        color: #f2f2f2;
+      }
+
+      #tab01 td {
+        text-align:center;
+      }
+
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Numerical Computing
+
+<h3 style="color: darkblue">Tae Geun Kim</h3>
+
+---
+
+## Table of Contents
+
+--
+
+* Differentiation
+
+--
+
+* Auto-Differentiation
+
+---
+
+class: center, middle
+
+# Differentiation
+
+---
+
+### Differentiation - Basic
+
+--
+
+$$ f'(a) = \lim_{h \rightarrow 0} \frac{f(a+h) - f(a)}{h} $$
+
+--
+
+* Code is so simple
+
+--
+
+```julia
+# julia
+function diff(f, x, h=1e-6)
+  return (f(x+h) - f(x))/h
+end
+```
+
+--
+
+```R
+# R
+diff = function(f, x, h=1e-6) {
+  return((f(x+h) - f(x)) / h)
+}
+```
+
+--
+
+```d
+// D
+alias func = double delegate(double);
+
+double diff(func f, double x, double h=1e-6) {
+  return (f(x+h) - f(x))/h;
+}
+```
+
+---
+
+### Differentiation - Basic
+
+* But we should input function to calculate differentiation always.
+
+--
+
+* Thus, we can't find higher order derivative with this code.
+
+--
+
+* We need derivative! (Not just differentiation!)
+
+--
+
+$$ f'(x) = \lim_{h \rightarrow 0} \frac{f(x+h) - f(x)}{h} $$
+
+--
+
+Then How?
+
+---
+
+### Differentiation - Basic
+
+There are two ways to make derivative.
+
+--
+
+1. Objective Oriented Programming
+
+--
+
+2. Functional Programming
+
+--
+
+More specify,
+
+--
+
+1. Using `class` or `struct`
+
+--
+
+2. Using **currying** or **Higher Order Function**
+
+---
+
+### Differentiation - OOP
+
+Differentiation with OOP has next strategies :
+
+--
+
+* Initialize `class` with function (e.g. `double` to `double`)
+
+--
+
+* Implement or Override `call` method (receive point to tangent)
+
+--
+
+```python
+# Python
+class Derivative:
+  def __init__(self, f):
+    self.f = f
+
+  def __call__(self, x, h=1e-6):
+    return (self.f(x + h) - self.f(x))/h
+
+# Usage
+from math import sin
+
+d = Derivative(sin)
+print([d(i) for i in range(0, 5)])
+```
+
+---
+
+### Differentiation - OOP
+
+```d
+// D
+alias func = double delegate(double);
+
+struct Derivative {
+  func f;
+
+  this(func g) {
+    this.f = g;
+  }
+
+  double opCall(double x, double h = 1e-06) {
+    return (f(x+h) - f(x)) / h;
+  }
+}
+```
+
+---
+
+### Differentiation - FP
+
+Differentiation with FP is simple :
+
+--
+
+* Currying or `return function`
+
+--
+
+```julia
+# julia - return function
+function derivative(f)
+  h = 1e-06
+  return (x -> (f(x+h) - f(x)) / h)
+end
+```
+
+--
+
+```haskell
+-- Haskell - currying
+derivative :: (Double -> Double) -> (Double -> Double)
+derivative f = \x -> (f (x+h) - f x) / h
+  where h = 1e-06
+```
+
+--
+
+```d
+// D - return function
+alias func = double delegate(double);
+
+func derivative(func f) {
+  return (double x) => (f(x+h) - f(x)) / h;
+}
+```
+
+---
+
+### Differentiation - FP
+
+```R
+# R
+derivative = function(f) {
+  return(function(x, h=1e-06) (f(x+h) - f(x))/h)
+}
+```
+
+--
+
+```kotlin
+// kotlin
+fun derivative(f: (Double) -> Double): (Double) -> Double {
+  val h: Double = 1e-06
+  return {x: Double -> (f(x+h) - f(x)) / h}
+}
+```
+
+--
+
+```nim
+# Nim
+proc derivative(f: proc): auto =
+  var h: f64 = 1e-06
+  return proc(x: f64): f64 = (f(x+h) - f(x))/h
+```
+
+--
+
+
+
+    </textarea>
+    <!-- <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured" type="text/javascript"></script>
+    <script src="./remark-latest.min.js"></script>
+    <!-- <script src="./MathJax.js" type="text/javascript"></script> -->
+    <script>
+      var slideshow = remark.create();
+
+      MathJax.Hub.Config({
+          tex2jax: {
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+          }
+      });
+
+      MathJax.Hub.Configured();
+    </script>
+  </body>
+</html>
