@@ -263,7 +263,7 @@ derivative = function(f) {
 ### Differentiation - FP
 
 ```d
-// D 
+// D
 alias func = double delegate(double);
 
 func derivative(func f) {
@@ -296,9 +296,112 @@ proc derivative(f: float64 -> float64): auto =
 
 ### Differentiation - Limitations
 
-* But numerical differentiation causes error snowballing
+But numerical differentiation causes error snowballing
 
+--
 
+We have two solutions :
+
+--
+
+* Symbolic differentiation (Mathematica, Sagemath or even MATLAB)
+
+--
+
+* Automatic Differentiation (Any languages)
+
+--
+
+Since symbolic differentiation is very heavy, we focused on Automatic differentiation.
+
+---
+
+class: center, middle
+
+# Automatic Differentiation
+
+---
+
+### Automatic Differentiation
+
+In traditional differentiation, there is tradeoff :
+
+--
+
+* Using symbolic differentiation is accurate but heavy
+
+--
+
+* Using numerical differentiation is fast but inaccurate
+
+--
+
+To solve this tradeoff, we need Automatic differentiation (AD).
+
+--
+
+<p style="color: red">But how to implement?</p>
+
+---
+
+### Automatic Differentiation
+
+Q. What is differentiation operator?
+
+--
+
+`\(D\)` is differentiation operator if satisfy following two conditions :
+
+--
+
+* Linear : `\(D(f + g) = D(f) + D(g)\)`
+
+--
+
+* Leibniz rule : `\(D(fg) = D(f)g + fD(g)\)`
+
+---
+
+### Automatic Differentiation
+
+Q. How many functions do you know?
+
+--
+
+: Surprisingly, we can express almost every functions by several functions
+
+--
+
+* Polynomial : `\(x^n\)`
+* Trigonometric : `\(sin, cos, tan\)`
+* Exponential : `\(a^x\)`
+* Logarithmic : `\(log\)`
+
+--
+
+Thus, idea of AD is
+
+--
+
+* Define only several rules of differentiation
+
+--
+
+* Preserve rule in function composition
+
+--
+
+That's it!
+
+---
+
+### Automatic Differentiation - Dual numbers
+
+Extend all numbers by adding a second component :
+
+$$ x \longrightarrow x + \dot{x}\mathbf{d} $$
+
+---
 
     </textarea>
     <!-- <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script> -->
