@@ -399,9 +399,269 @@ That's it!
 
 Extend all numbers by adding a second component :
 
-$$ x \longrightarrow x + \dot{x}\mathbf{d} $$
+$$ x \longrightarrow x + \dot{x}d $$
+
+--
+
+* `\(d\)` is just a symbol distinguishing the second component
+
+--
+
+* It is similar to `\(i\)`, but `\(d^2 = 0\)`.
+
+--
+
+Then we can make arithmatic on dual numbers.
 
 ---
+
+### Automatic Differentiation - Dual numbers
+
+* Basic arithmetics
+
+--
+
+$$ (x + \dot{x}d) \pm (y + \dot{y}d) = (x \pm y) + (\dot{x} \pm \dot{y})d $$
+
+--
+
+$$ 
+\begin{aligned}
+(x + \dot{x}d) \cdot (y + \dot{y}d) &= xy + (\dot{x}y + x\dot{y})d + \dot{x}\dot{y}d^2 \\\
+&= xy + (\dot{x}y + x\dot{y})d
+\end{aligned}
+$$
+
+--
+
+$$
+\begin{aligned}
+  \frac{x + \dot{x}d}{y + \dot{y}d} &= \frac{(x + \dot{x}d)(y - \dot{y}d)}{y^2} \\\
+  &= \frac{xy + (\dot{x}y - x\dot{y})d}{y^2} \\\
+  &= \frac{x}{y} + \frac{\dot{x}y - x\dot{y}}{y^2}d
+\end{aligned}
+$$
+
+---
+
+### Automatic Differentiation - Dual numbers
+
+* For polynomials
+
+--
+
+$$
+\begin{aligned}
+  P(x + \dot{x}d) =& p\_0 + p\_1(x+\dot{x}d) + \cdots + p\_n(x + \dot{x}d)^n \\\
+  =& p\_0 + p\_1 x + p\_2 x^2 + \cdots + p\_n x^n \\\
+  &+ p\_1 \dot{x}d + 2p\_2 x\dot{x}d + \cdots + np\_nx^{n-1}\dot{x}d \\\
+  =& P(x) + P'(x)\dot{x}d
+\end{aligned}
+$$
+
+--
+
+Then we can apply dual number formalism to special functions! (at least analytic)
+
+--
+
+For example, for sine function,
+
+--
+
+$$ \sin(x+\dot{x}d) = \sin{x} + \dot{x}\cos{x}d $$
+
+---
+
+class: center, middle
+
+## Homework #5
+
+<p style="font-size:24px">Describe AD of exponential, trigonometric and logarithmic functions.</p>
+
+---
+
+### Automatic Differentiation - Dual numbers
+
+Q. Can it be applied to generic functions?
+
+--
+
+For example : `\(f(x_1, x_2) = x_1 x_2 + \sin(x_1)\)` 
+
+--
+
+$$
+\begin{aligned}
+  f(x\_1 + \dot{x}\_1 d, x\_2 + \dot{x}\_2 d) &= (x\_1 + \dot{x}\_1 d\_1)(x\_2 + \dot{x}\_2 d\_2) + \sin(x\_1 + \dot{x}\_1 d\_1) \\\
+  &= x\_1 x\_2 + (x\_2 + \cos(x\_1))\dot{x\_1}d\_1 + x\_1 \dot{x}\_2 d\_2
+\end{aligned}
+$$
+
+--
+
+<br/>
+
+Works Great!!
+
+--
+
+<br/>
+
+But how to implement?
+
+---
+
+### Automatic Differentiation - Implementation
+
+There are two approches,
+
+--
+
+* Source code transformation (C, Fortran 77)
+
+--
+
+* Operator overloading (C++, Fortran 90)
+
+--
+
+We choose second way. We need programming languages which support operator overloading.
+
+---
+
+### Automatic Differentiation - Implementation
+
+<table id="tab01" align="center">
+  <tr>
+    <th>Language</th>
+    <th>Paradigm</th>
+    <th>Overloading Method</th>
+    <th>Difficulty</th>
+  </tr>
+  <tr>
+    <td>R</td>
+    <td>OOP?</td>
+    <td>Multiple Dispatch</td>
+    <td>Easy</td>
+  </tr>
+  <tr>
+    <td>Julia</td>
+    <td>OOP + FP</td>
+    <td>Multiple Dispatch</td>
+    <td>Easy</td>
+  </tr>
+  <tr>
+    <td>MATLAB</td>
+    <td>OOP?</td>
+    <td>Class</td>
+    <td>Easy</td>
+  </tr>
+  <tr>
+    <td>Python</td>
+    <td>OOP + FP</td>
+    <td>Class</td>
+    <td>Easy</td>
+  </tr>
+  <tr>
+    <td>Nim</td>
+    <td>OOP + FP</td>
+    <td>Multiple Dispatch</td>
+    <td>Normal</td>
+  </tr>
+  <tr>
+    <td>D</td>
+    <td>OOP + FP</td>
+    <td>Class + Multiple Dispatch</td>
+    <td>Normal</td>
+  </tr>
+  <tr>
+    <td>C++</td>
+    <td>OOP</td>
+    <td>Class</td>
+    <td>Hard</td>
+  </tr>
+  <tr>
+    <td>Rust / Scala</td>
+    <td>OOP + FP</td>
+    <td>Trait</td>
+    <td>Hard</td>
+  </tr>
+  <tr>
+    <td>Haskell</td>
+    <td>FP</td>
+    <td>Type class</td>
+    <td>Hard</td>
+  </tr>
+</table>
+
+---
+
+### Automatic Differentiation - D Code
+
+```d
+import std.math : sin, cos, tan, log;
+
+struct Dual {
+  double x;
+  double dx;
+  
+  // Constructor
+  this(double a, double b) {
+    this.x = a;
+    this.dx = b;
+  }
+
+  // Operator overloading section
+}
+```
+
+---
+
+### Automatic Differentiation - D Code
+
+```d
+// Unary operator overloading
+Dual opUnary(string op)() {
+  double val;
+  double dval;
+
+  switch (op) {
+    case "-":
+      val = -this.x;
+      dval = -this.dx;
+      break;
+    default:
+      break;
+  }
+  return Dual(val, dval);
+}
+```
+
+---
+
+### Automatic Differentiation - D Code
+
+```d
+// Binary operator overloading (Dual vs Dual)
+Dual opBinary(string op)(Dual rhs) {
+  double val;
+  double dval;
+
+  switch (op) {
+    case "+":
+      val = this.x + rhs.x;
+      dval = this.dx + rhs.dx;
+      break;
+    case "*":
+      val = this.x * rhs.x;
+      dval = this.dx * rhs.x + this.x * rhs.dx;
+      break;
+    // ETC
+  }
+  return Dual(val, dval);
+}
+```
 
     </textarea>
     <!-- <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script> -->
