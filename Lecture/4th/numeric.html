@@ -251,12 +251,10 @@ derivative f = \x -> (f (x+h) - f x) / h
 
 --
 
-```d
-// D - return function
-alias func = double delegate(double);
-
-func derivative(func f) {
-  return (double x) => (f(x+h) - f(x)) / h;
+```R
+# R - return function
+derivative = function(f) {
+  return(function(x, h=1e-06) (f(x+h) - f(x))/h)
 }
 ```
 
@@ -264,10 +262,12 @@ func derivative(func f) {
 
 ### Differentiation - FP
 
-```R
-# R
-derivative = function(f) {
-  return(function(x, h=1e-06) (f(x+h) - f(x))/h)
+```d
+// D 
+alias func = double delegate(double);
+
+func derivative(func f) {
+  return (double x) => (f(x+h) - f(x)) / h;
 }
 ```
 
@@ -285,12 +285,18 @@ fun derivative(f: (Double) -> Double): (Double) -> Double {
 
 ```nim
 # Nim
-proc derivative(f: proc): auto =
-  var h: f64 = 1e-06
-  return proc(x: f64): f64 = (f(x+h) - f(x))/h
+import future
+
+proc derivative(f: float64 -> float64): auto =
+  var h: float64 = 1e-06
+  return proc(x: float64): float64 = (f(x+h) - f(x))/h
 ```
 
---
+---
+
+### Differentiation - Limitations
+
+* But numerical differentiation causes error snowballing
 
 
 
