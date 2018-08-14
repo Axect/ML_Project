@@ -20,7 +20,7 @@ import dnum.stats;
 //}
 
 /++
-  Second fastest - use fmap
+  Also fastest - use fmap
 +/
 void main() {
   auto xs = runif(1000000, 0, 1);
