@@ -6,28 +6,54 @@ import dnum.utils;
 import dnum.stats;
 
 /++
-  Fastest ways - use foreach
+  Fastest ways - use foreach parallel fold
++/
+void main() {
+  import std.parallelism : taskPool;
+
+  auto xs = runif(1000000, 0, 1);
+  
+  foreach (ref elem; taskPool.parallel(xs.data[0])) {
+    elem = 4 / (1 + elem ^^ 2);
+  }
+  double pi = xs.psum;
+
+  pi /= 1_000_000;
+  pi.writeln;
+}
+
+
+
+/++
+  Fastest ways - use foreach parallel with workerlocalstorage
 +/
 //void main() {
-//  auto xs = runif(1000000, 0, 1); // Pick 100 uniform random values
-//  double pi = 0;
+//  import std.parallelism : taskPool;
 //
-//  foreach (x; xs.data[0]) {
-//    pi += 4 / (1 + x^^2);
+//  auto xs = runif(1000000, 0, 1); // Pick 100 uniform random values
+//  auto pis = taskPool.workerLocalStorage(0.0);
+//  foreach (x; taskPool.parallel(xs.data[0])) {
+//    pis.get += 4 / (1 + x^^2);
+//  }
+//  
+//  double pi = 0;
+//  foreach (res; pis.toRange) {
+//    pi += res;
 //  }
 //  pi /= 1000000;
 //  pi.writeln;
 //}
 
 /++
-  Also fastest - use fmap
+  Second fastest - use fmap & parallel
 +/
-void main() {
-  auto xs = runif(1000000, 0, 1);
-  double pi = xs.fmap(x => 4 / (1 + x^^2)).sum;
-  pi /= 1000000;
-  pi.writeln;
-}
+//void main() {
+//  import std.parallelism : taskPool;
+//  auto xs = runif(1000000, 0, 1);
+//  double pi = taskPool.reduce!"a + b"(xs.fmap(x => 4 / (1 + x^^2)).data[0]);
+//  pi /= 1000000;
+//  pi.writeln;
+//}
 
 /++
   Slowest - vector ops
