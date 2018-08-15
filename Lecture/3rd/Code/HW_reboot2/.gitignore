@@ -1,0 +1,14 @@
+.dub
+docs.json
+__dummy.html
+docs/
+hw_reboot2.so
+hw_reboot2.dylib
+hw_reboot2.dll
+hw_reboot2.a
+hw_reboot2.lib
+hw_reboot2-test-*
+*.exe
+*.o
+*.obj
+*.lst
