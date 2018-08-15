@@ -12,7 +12,7 @@ void main() {
   import std.parallelism : taskPool;
 
   auto xs = runif(1000000, 0, 1);
-  
+
   foreach (ref elem; taskPool.parallel(xs.data[0])) {
     elem = 4 / (1 + elem ^^ 2);
   }
