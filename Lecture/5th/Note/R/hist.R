@@ -10,6 +10,12 @@ y2 <- 0.5 * x^2 + rnorm(100) * 5
 m2 <- lm(y2 ~ x)
 e2 <- y2 - m2$fitted.values
 
+png("hist.png")
 par(mfrow=c(1,2))
 hist(e1)
 hist(e2)
+dev.off()
+
+print(shapiro.test(e1))
+print(shapiro.test(e2))
+

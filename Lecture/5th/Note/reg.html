@@ -186,6 +186,223 @@ Q. Why does cheese cake taste cheese?
 
 * Normal distribution is defined from distribution of errors.
 
+---
+
+### `\(\epsilon \sim N(0,\sigma^2)\)`
+
+For example, see next R code
+
+```R
+x = 1:100
+
+# Model 1
+y1 = 0.5 * x + rnorm(100) * 5
+m1 = lm(y1 ~ x)
+e1 = y1 - m1$fitted.values
+
+# Model 2
+y2 = 0.5 * x^2 + rnorm(100) * 5
+m2 = lm(y2 ~ x)
+e2 = y2 - m2$fitted.values
+
+par(mfrow=c(1,2))
+hist(e1)
+hist(e2)
+
+shapiro.test(e1)
+shapiro.test(e2)
+```
+
+---
+
+### `\(\epsilon \sim N(0,\sigma^2)\)`
+
+Then we get next figures
+
+--
+
+.center[<img src="hist.png" width="60%">]
+
+---
+
+### `\(\epsilon \sim N(0,\sigma^2)\)`
+
+And we get next values
+
+--
+
+```sh
+	Shapiro-Wilk normality test
+
+data:  e1
+W = 0.99039, p-value = 0.6959
+
+
+	Shapiro-Wilk normality test
+
+data:  e2
+W = 0.89423, p-value = 7.642e-07
+```
+
+--
+
+There are many ways to test normality
+
+---
+
+class: middle, center
+
+## Homework #6
+
+<p style="font-size:24px">Search and implement any normality test</p>
+
+---
+
+class: middle, center
+
+# Simple Linear Regression
+
+---
+
+### Simple Linear Regression
+
+--
+
+For simple linear regression, we use least square method - minimize RSS
+
+--
+
+* Model 
+
+$$ \hat{Y} = \beta\_0 + \beta\_1 X $$
+
+--
+
+<br/>
+
+* Error
+
+$$ RSS = \sum\_{i=1}^n e\_i^2 = \sum\_{i=1}^n (Y\_i - \hat{Y}\_i)^2 = \sum\_{i=1}^n (Y\_i - \beta\_0 - \beta\_1 X\_i)^2$$
+
+---
+
+### Simple Linear Regression
+
+To find `\(\beta_0, \beta_1\)`, we use partial derivative :
+
+--
+
+$$
+\begin{gathered}
+\frac{\partial Q}{\partial \beta\_0} \sim \sum\_{i=1}^n(Y\_i - \beta\_0 - \beta\_1 X\_i) = 0 \\\
+\frac{\partial Q}{\partial \beta\_1} \sim \sum\_{i=1}^n(Y\_i - \beta\_0 - \beta\_1 X\_i)\cdot(X\_i) = 0
+\end{gathered}
+$$
+
+--
+
+Then we can get next equation (normal equation)
+
+--
+
+$$
+\begin{gathered}
+\sum\_i Y\_i = n\beta\_0 + \beta\_i \sum\_i X\_i \\\
+\sum\_i X\_i Y\_i = \beta\_0 \sum\_i X\_i + \beta\_1 \sum\_i X\_i^2
+\end{gathered}
+$$
+
+---
+
+### Simple Linear Regression
+
+Finally, we obtain parameters!
+
+--
+
+$$
+\begin{aligned}
+\beta\_1 &= \frac{n\sum X\_i Y\_i - (\sum X\_i)(\sum Y\_i)}{n\sum X\_i^2 - (\sum X\_i)^2} \\\
+\beta\_0 &= \frac{1}{n}(\sum Y\_i - \beta\_1 \sum X\_i)
+\end{aligned}
+$$
+
+--
+
+It can be represented as :
+
+--
+
+$$
+\begin{aligned}
+\beta\_1 &= \frac{\sum(X\_i - \bar{X})(Y\_i - \bar{Y})}{(X\_i - \bar{X}\_i)^2} \\\
+\beta\_0 &= \bar{Y} - \beta\_1 \bar{X}
+\end{aligned}
+$$
+
+---
+
+class: middle, center
+
+## Homework #7
+
+<p style="font-size:24px">Prove all formulae in previous slide</p>
+
+---
+
+### Example - Effective advertising
+
+<table id="tab01" align="center">
+  <tr>
+    <th>Month</th>
+    <th>Advertise Cost</th>
+    <th>Sales</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>25</td>
+    <td>100</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>52</td>
+    <td>256</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>38</td>
+    <td>152</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>32</td>
+    <td>140</td>
+  </tr>
+  <tr>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>42</td>
+    <td>198</td>
+  </tr>
+</table>
+
+> Refer to `data.csv`, do simple linear regression for this example.
+> `wget `
+
+---
+
+### Example - Effective Advertising
+
+.center[<img src="slr.png" width="70%">]
+
+---
+
+
+
     </textarea>
     <!-- <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured" type="text/javascript"></script>
