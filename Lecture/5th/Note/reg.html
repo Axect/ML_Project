@@ -66,21 +66,125 @@ class: center, middle
 
 --
 
-* What can be done by perceptron?
-
---
-
-* What can't be done by perceptron?
-
---
-
-* Linear Regression
-
---
-
-* Multi Layer Perceptron
+* What is regression?
 
 ---
+
+class: center, middle
+
+# What is regression?
+
+---
+
+### What is regression?
+
+--
+
+.center[<img src="ridge.gif" width="80%">]
+
+---
+
+### What is regression?
+
+--
+
+> In statistical modeling, regression analysis is a set of statistical processes for estimating the relationships among variables
+
+--
+
+Thus, regression is
+
+--
+
+* Just estimate correlation between variables (= modeling)
+
+--
+
+* And almost all of statistics.
+
+--
+
+Regression is divided into two stages:
+
+--
+
+* Modeling
+
+--
+
+* Estimate parameters
+
+---
+
+### Modeling
+
+--
+
+.center[<img src="reg_data.png" width="60%">]
+
+--
+
+Q. How can we model this?
+
+---
+
+### Modeling
+
+We suppose next relation :
+
+$$ Y = f(X) + \epsilon $$
+
+--
+  * `\(X\)` is value of independent variables (not random variable!)
+
+--
+  * `\(f\)` is relation
+
+--
+  * `\(\epsilon\)` is error - it follows `\(N(0,\sigma^2)\)`
+
+--
+
+with next assumption :
+
+--
+  * Every error forms normal distribution and independent of `\(X\)`
+
+--
+  * Each error of observations is independent
+
+  $$ Cov(\epsilon\_i, \epsilon\_j) = 0 $$
+
+--
+  * `\(Y \sim N(f(X), \sigma^2)\)`
+
+---
+
+### `\(\epsilon \sim N(0,\sigma^2)\)`
+
+--
+
+Q. Why error should belong to normal distribution?
+
+--
+
+This question is same as...
+
+--
+
+Q. Why does cheese cake taste cheese?
+
+--
+
+> ... Laplace used the normal curve in 1783 to describe the distribution of errors. Subsequently, Gauss used the normal curve to analyze astronomical data in 1809. The normal curve is often called the Gaussian distribution. The term bell-shaped curve is often used in everyday usage.
+
+--
+
+* Error doesn't follow normal distribution.
+
+--
+
+* Normal distribution is defined from distribution of errors.
 
     </textarea>
     <!-- <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script> -->
