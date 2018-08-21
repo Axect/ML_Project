@@ -409,8 +409,95 @@ class: middle, center
 
 ---
 
+### Evaluation of Regression
 
+There are two ways to evaluate regression model:
 
+--
+
+* Standard error of the estimate
+
+--
+
+* Coefficient of determination
+
+--
+
+Standard error of the estimate is simple.
+
+--
+
+$$ S\_{y\cdot x}  = \sqrt{\frac{\sum (Y\_i - \hat{Y}\_i)^2}{n - 2}}$$
+
+--
+
+* Near 0 is best
+
+--
+
+* But this is only valid for relative comparison (Not absolute)
+
+---
+
+### Coefficient of determination
+
+Total variation can be divided by two parts:
+
+--
+
+$$ \underbrace{(Y\_i - \bar{Y})}\_{\text{total dev}} = \overbrace{(Y\_i - \hat{Y})}^{\text{irreducible dev}} + \underbrace{(\hat{Y}\_i - \bar{Y})}\_{\text{reducible dev}} $$
+
+--
+
+Then we can obtain
+
+--
+
+$$ \sum (Y\_i - \bar{Y})^2 = \sum [(Y\_i - \hat{Y}\_i) + (\hat{Y}\_i - \bar{Y})]^2 $$
+
+--
+
+<br/>
+
+It's easy to find `\(\sum e_i (\hat{Y}_i - \bar{Y}) = 0\)` so,
+
+--
+
+$$ \underbrace{\sum (Y\_i - \bar{Y})^2}\_{SST} = \underbrace{\sum (Y\_i - \hat{Y}\_i)^2}\_{SSE} + \underbrace{\sum (\hat{Y}\_i - \bar{Y})^2}\_{SSR} $$
+
+---
+
+### Coefficient of determination
+
+Explain notations
+
+* SST : Total Variation
+
+* SSE : Sum of squares due to residual error
+
+* SSR : Sym of squares due to regression
+
+--
+
+Coefficient of determination is,
+
+--
+
+$$ r^2 = \frac{SSR}{SST} = 1 - \frac{SSE}{SST} $$
+
+--
+
+* `\(r^2 \sim 1\)` : Best correlation!
+* `\(r^2 \sim 0\)` : No correlation!
+* `\(r^2 \geq 0.7\)` : Good!
+
+---
+
+class: middle, center
+
+## Homework #8
+
+<p style="font-size:24px">Implement \(r^2\) and find \(r^2\) of previous example</p>
 
     </textarea>
     <!-- <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script> -->
