@@ -1,0 +1,14 @@
+.dub
+docs.json
+__dummy.html
+docs/
+reg.so
+reg.dylib
+reg.dll
+reg.a
+reg.lib
+reg-test-*
+*.exe
+*.o
+*.obj
+*.lst
