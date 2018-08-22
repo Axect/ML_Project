@@ -11,6 +11,9 @@ void main() {
   line.writeln;
 }
 
+/++
+  Linear Regression
++/
 struct Linear {
   double slope;
   double intercept;
