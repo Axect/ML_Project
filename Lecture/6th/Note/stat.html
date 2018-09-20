@@ -178,6 +178,115 @@ class: center, middle
 
 ---
 
+### Histograms
+
+A simple technique to obtain an idea of the probability density giving the data
+`\(x_1, \cdots , x_n\)` is the **histogram**. Choose a partition `\(a_0 < a_1 < \cdots < a_m\)` that covers the range of the data `\(x_1,\cdots,x_n\)`
+then the scaled histogram is given as
+
+--
+
+$$
+h\_n(x) = \frac{\\#\left(1\leq i \leq n : x\_i \in (a\_{j-1},a\_j]\right)}{n(a\_j - a\_{j-1})}
+= \frac{1}{n(a\_j - a\_{j-1})} \sum\_{i=1}^n 1\_{a\_{j-1} < x\_i \leq a\_j}
+$$
+
+--
+
+$$
+\begin{aligned}
+E h\_n(x) &= E \frac{1}{n(a\_j - a\_{j-1})} \sum\_{i=1}^n 1\_{a\_{j-1} < x\_i \leq a\_j} 
+= \frac{1}{a\_j - a\_{j-1}}E 1\_{a\_{j-1} < X\_k \leq a\_j} \\\
+&= \frac{1}{a\_j - a\_{j-1}} P(a\_{j-1} < X\_k \leq a\_j) = \frac{\int\_{a\_{j-1}}^{a\_j} f(s)ds}{a\_j - a\_{j-1}}  \\\
+\\\
+&\simeq f(x) ~~~~ (a\_{j-1} < x \leq a\_{j})
+\end{aligned}
+$$
+
+---
+
+### Histograms
+
+* Expected value of `\(h_n(x)\)` is approximately equal to `\(f(x)\)`.
+
+--
+
+* By the law of large numbers, `\(h_n(x)\)` converges in probability to this expected value.
+
+--
+
+* Therefore, a histogram provides an impression of the distribution giving a sample.
+
+--
+```R
+x <- mtcars$mpg
+svg(filename="hist.svg", width=8, height=6)
+h <- hist(x, breaks=10)
+xfit <- seq(min(x),max(x),length=40)
+yfit <- dnorm(xfit,mean=mean(x),sd=sd(x))
+yfit <- yfit * diff(h$mids[1:2]) * length(x)
+lines(xfit, yfit, lwd=2)
+dev.off()
+```
+
+---
+
+### Histograms
+
+<p style="text-align:center"><img src="../Code/hist.svg" width=90%></img></p>
+
+---
+
+class: center, middle
+
+# Boxplots
+
+---
+
+### Boxplots
+
+A **boxplot** is a graphical representation of the data that gives
+an idea of the location and dispersion of the data, of possible outliers in the observations,
+and of the symmetry of the distrubtion giving the observations.
+
+--
+
+* Bottom : Minimum
+
+--
+
+* 2nd : 1st Quartile
+
+--
+
+* Mid : 2nd Quartile (Median)
+
+--
+
+* 4th : 3rd Quartile
+
+--
+
+* Top : Maximum
+
+--
+
+2nd ~ 4th is called **interquartile range**.
+
+---
+
+class: center, middle
+
+# QQ-Plots
+
+---
+
+### Location-scale family
+
+
+
+---
+
     </textarea>
     <!-- <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured" type="text/javascript"></script>
