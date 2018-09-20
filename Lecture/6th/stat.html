@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Descriptive Statistics</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      @import url('https://fonts.googleapis.com/css?family=Libre+Baskerville');
+      @import url('https://fonts.googleapis.com/css?family=Righteous');
+      @import url('https://fonts.googleapis.com/css?family=EB+Garamond');
+      @import url('https://fonts.googleapis.com/css?family=Caveat');
+      @import url('https://fonts.googleapis.com/css?family=Kalam');
+
+      body { font-family: 'Kalam'; }
+      h1, h2, h3, h4, h5 {
+        font-family: 'Caveat';
+        font-weight: normal;
+        text-shadow: 1px 2px 2px grey;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+
+      #tab01 {
+        border-collapse: collapse;
+        width: 80%;
+      }
+
+      #tab01 td, #tab01 th {
+        border-bottom: 1px solid #ddd;
+        padding: 8px;
+      }
+
+      #tab01 tr:nth-child(even){
+        background-color: #f2f2f2;
+      }
+
+      #tab01 tr:hover {background-color: #ddd;}
+
+      #tab01 th {
+        padding-top: 8px;
+        padding-bottom:8px;
+        text-align: center;
+        background: #555555;
+        color: #f2f2f2;
+      }
+
+      #tab01 td {
+        text-align:center;
+      }
+
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Descriptive Statistics
+
+<h3 style="color: darkblue">Tae Geun Kim</h3>
+
+---
+
+## Table of Contents
+
+* Univariate Samples
+
+--
+
+* Boxplots
+
+--
+
+* QQ-Plot
+
+--
+
+* Correlation
+
+---
+
+class: center, middle
+
+# Univariate Samples
+
+---
+
+### Sample Statistics
+
+* Sample mean
+$$ \bar{X} = \frac{1}{n}\sum\_{i=1}^n X\_i $$
+
+--
+
+* Sample variance
+$$ S\_X^2 = \frac{1}{n-1} \sum\_{i=1}^n (X\_i - \bar{X})^2$$
+
+--
+
+* Sample median: ??
+
+--
+
+* Sample mode: ??
+
+---
+
+class: center, middle
+
+## Problem #1
+
+<p style="font-size:24px">Implement Sample mean, variance, median & Sample mode<br/> in 10 minutes</p>
+<p style="font-size:20px">Hint: Use sorting algorithms</p>
+
+---
+
+### Hint: Quick Sort (Algorithm)
+
+* Quick sort is one of famous sorting algorithms.
+
+--
+
+* It is commonly known as fastest sorting algorithms in real word data.
+
+--
+
+* Here are algorithms
+
+--
+
+  * Choose middle value as pivot.
+
+--
+
+  * All smaller values move to left of pivot and vice versa.
+
+--
+
+  * Repeat these processes to left & right lists.
+
+---
+
+### Hint: Quick Sort (R Code)
+
+```R
+quicksort <- function(xs) {
+  l <- length(xs)
+  if (l == 0 || l == 1) {
+    return(xs)
+  }
+  
+  pivot <- xs[length(xs)/2]
+  less <- c()
+  more <- c()
+  equal <- c()
+  for (x in xs) {
+    if (x < pivot) {
+      less <- c(less,x)
+    } else if (x > pivot) {
+      more <- c(more,x)
+    } else {
+      equal <- c(equal,x)
+    }
+  }
+  return(c(quicksort(less), equal, quicksort(more)))
+}
+```
+
+---
+
+class: center, middle
+
+## Homework #9
+
+<p style="font-size:24px">Study and implement other sorting algorithms <br/>(Bubble Sort, Merge Sort, Insertion Sort)</p>
+[Reference](https://medium.com/@fiv3star/%EC%A0%95%EB%A0%AC%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-sorting-algorithm-%EC%A0%95%EB%A6%AC-8ca307269dc7)
+
+---
+
+    </textarea>
+    <!-- <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured" type="text/javascript"></script>
+    <script src="./remark-latest.min.js"></script>
+    <!-- <script src="./MathJax.js" type="text/javascript"></script> -->
+    <script>
+      var slideshow = remark.create();
+
+      MathJax.Hub.Config({
+          tex2jax: {
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+          }
+      });
+
+      MathJax.Hub.Configured();
+    </script>
+  </body>
+</html>
