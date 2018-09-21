@@ -283,7 +283,36 @@ class: center, middle
 
 ### Location-scale family
 
+* Location-scale family
 
+--
+
+  If the random variable `\(X\)` has a distribution function `\(F\)`, then
+  `\(Y = a+bX\)` has the distribution function `\(F_{a,b}\)` given by
+  $$ F\_{a,b}(y) = P(a+bX\leq Y) = F\left(\frac{y-a}{b}\right), \hspace{2cm} b>0$$
+  The family of distributions `\(\{F_{a,b}: a \in \mathbb{R},b>0\}\)` is called the
+  **location-scale family** associated with `\(F\)` (or "for `\(X\)`")
+
+--
+
+  If `\(F\)` has probability density `\(f\)`, then `\(F_{a,b}\)` has probability density
+  `\(f_{a,b}\)` given by
+  $$f\_{a,b}(y) = \frac{d}{dy}F\left(\frac{y-a}{b}\right) = \frac{1}{b}f\left(\frac{y-a}{b}\right)$$
+  
+---
+
+### Location-scale family
+
+* Mean & Variance
+
+--
+
+  If `\(EX = 0,~ \text{var } X = 1\)`, then `\(EY = a,~ \text{var } Y = b^2\)`
+
+--
+
+To every (standard) distribution (normal, Cauchy, exponential, etc.) corresponds
+a 
 
 ---
 
