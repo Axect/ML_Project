@@ -4,3 +4,4 @@
 *.c
 */**/nimcache/*
 0/*
+*/**/target/*

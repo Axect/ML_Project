@@ -1,1 +1,0 @@
-{"rustc":6584147876609179215,"features":"[]","target":686786188593406374,"profile":13846881912122723292,"path":1893651117718643025,"deps":[["csv-core v0.1.4","csv_core",11410416859214271430],["serde v1.0.80","serde",2376489093264578890]],"local":[{"Precalculated":"1.0.2"}],"rustflags":[],"edition":"Edition2015"}
