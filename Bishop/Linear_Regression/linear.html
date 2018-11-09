@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Linear Regression</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      @import url('https://fonts.googleapis.com/css?family=Libre+Baskerville');
+      @import url('https://fonts.googleapis.com/css?family=Righteous');
+      @import url('https://fonts.googleapis.com/css?family=EB+Garamond');
+      @import url('https://fonts.googleapis.com/css?family=Caveat');
+      @import url('https://fonts.googleapis.com/css?family=Kalam');
+
+      body { font-family: 'Kalam'; }
+      h1, h2, h3, h4, h5 {
+        font-family: 'Caveat';
+        font-weight: normal;
+        text-shadow: 1px 2px 2px grey;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+
+      #tab01 {
+        border-collapse: collapse;
+        width: 80%;
+      }
+
+      #tab01 td, #tab01 th {
+        border-bottom: 1px solid #ddd;
+        padding: 8px;
+      }
+
+      #tab01 tr:nth-child(even){
+        background-color: #f2f2f2;
+      }
+
+      #tab01 tr:hover {background-color: #ddd;}
+
+      #tab01 th {
+        padding-top: 8px;
+        padding-bottom:8px;
+        text-align: center;
+        background: #555555;
+        color: #f2f2f2;
+      }
+
+      #tab01 td {
+        text-align:center;
+      }
+
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Linear Regression
+
+<h3 style="color: darkblue">Tae Geun Kim</h3>
+
+---
+
+## Table of Contents
+
+--
+
+* Least Square Method
+
+--
+
+* Vectorize
+
+--
+
+* Regularize
+
+---
+
+class: center, middle
+
+# Least Square Method
+
+---
+
+### Least Square Method - Principle
+
+Suppose that data set `\(\mathcal{D}\)` is given as
+
+$$ \mathcal{D} = \left\\{(x\_1,t\_1),~\cdots~, (x\_n, t\_n)\right\\}$$
+
+--
+
+Then we want to find next function
+
+$$f(x;w\_0,w\_1) = w\_0 + w\_1 x $$
+
+--
+
+To minimize loss function (`\(\mathcal{L}_n\)` means specific error between `\(f(x_n;w_0,w_1)\,\&\,t_n\)`)
+
+$$ \mathcal{L} = \frac{1}{N} \sum\_{n=1}^N \mathcal{L}\_n (t\_n,f(x\_n;w\_0,w\_1)) $$
+
+--
+
+To summarize this, we finally want to find
+
+$$ \underset{w\_0,w\_1}{\text{argmin}} \frac{1}{N} \sum\_{n=1}^N \mathcal{L}\_n (t\_n,f(x\_n;w\_0,w\_1))$$
+
+---
+
+### Least Square Method - Principle
+
+Usually we use **Residual Sum of Squares (RSS)** as loss function, because it's convenient to find analytical solutions.
+But, nowadays, computing power is enough to find accurate numerical solutions, so we can choose any loss function.
+
+--
+
+RSS is given as
+
+$$\mathcal{L} = \frac{1}{N} \sum\_{n=1}^N (t\_n - f(x\_n;w\_0,w\_1))^2 $$
+
+
+---
+
+### Least Square Method - Algorithm
+
+The process is so simple.
+
+--
+
+* Given domain `\(x_n\)` & image `\(t_n\)`
+
+--
+
+
+    </textarea>
+    <!-- <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured" type="text/javascript"></script>
+    <script src="./remark-latest.min.js"></script>
+    <!-- <script src="./MathJax.js" type="text/javascript"></script> -->
+    <script>
+      var slideshow = remark.create();
+
+      MathJax.Hub.Config({
+          tex2jax: {
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+          }
+      });
+
+      MathJax.Hub.Configured();
+    </script>
+  </body>
+</html>
