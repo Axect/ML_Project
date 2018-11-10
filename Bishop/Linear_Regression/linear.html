@@ -119,18 +119,27 @@ But, nowadays, computing power is enough to find accurate numerical solutions, s
 
 RSS is given as
 
-$$\mathcal{L} = \frac{1}{N} \sum\_{n=1}^N (t\_n - f(x\_n;w\_0,w\_1))^2 $$
-
-
----
-
-### Least Square Method - Algorithm
-
-The process is so simple.
+$$\mathcal{L} = \frac{1}{N} \sum\_{n=1}^N (t\_n - (w\_0 + w\_1 x))^2 $$
 
 --
 
-* Given domain `\(x_n\)` & image `\(t_n\)`
+Then we should find `\(w_0, w_1\)` which minimize this RSS
+
+---
+
+### Least Square Method - Solution
+
+It's trivial that RSS is differentiable, to find minimum we should differentiate this.
+
+--
+
+$$
+\begin{align}
+      &\frac{\partial \mathcal{L}}{\partial w\_0} = \frac{2}{N}\sum\_{n=1}^N (w\_0 + w\_1x - t\_n) = 0\\\
+      \Rightarrow& w\_0 = 
+\end{align}
+$$
+
 
 --
 
