@@ -1,0 +1,9 @@
+[package]
+name = "Bernoulli"
+version = "0.1.0"
+authors = ["axect <axect@outlook.kr>"]
+edition = "2018"
+
+[dependencies]
+peroxide = "0.9"
+rand = "0.6"
