@@ -1,4 +1,4 @@
-using BenchmarkTools
+using BenchmarkTools, Zygote
 
 function weights_init(m, n)
     w = rand(m,n)
@@ -8,6 +8,8 @@ end
 function sigmoid(x)
     return 1.0 ./ (1.0 .+ exp.(-x))
 end
+
+dsigmoid(x) = sigmoid'(x)
 
 function forward(weight, inputb)
     s = inputb * weight
@@ -34,8 +36,8 @@ function train(w1, w2, input, answer, eta=0.25, times=5000)
         ab = add_bias(a, -1.0)
         y = forward(w, ab)
         wb = hide_bias(w)
-        d_o = (y - t) .* (y .* (-y .+ 1.0))
-        d_h = (d_o * wb') .* (a .* (-a .+ 1.0))
+        d_o = (y - t) .* map(dsigmoid, y)
+        d_h = (d_o * wb') .* map(dsigmoid, a)
         
         w = w - eta * (ab' * d_o)
         v = v - eta * (xb' * d_h)
