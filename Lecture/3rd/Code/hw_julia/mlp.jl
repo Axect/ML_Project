@@ -25,7 +25,7 @@ function hide_bias(weight)
     return weight[2:end, :]
 end
 
-function train(w1, w2, input, answer, eta=0.25, times=5000)
+function train(w1, w2, input, answer, eta=0.25, times=10000)
     x = input
     v = w1
     w = w2
