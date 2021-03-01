@@ -31,7 +31,7 @@ function train(w1, w2, input, answer, eta=0.25, times=10000)
     w = w2
     t = answer
     xb = add_bias(x, -1.0)
-    for i in 2:times
+    @inbounds @simd for i in 2:times
         a = forward(v, xb)
         ab = add_bias(a, -1.0)
         y = forward(w, ab)
