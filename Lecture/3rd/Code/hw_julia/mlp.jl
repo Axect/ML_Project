@@ -15,7 +15,7 @@ function sigmoid_avx(x::S) where {T <: Number, S <: AbstractMatrix{T}}
     (row, col) = size(x)
     m = Matrix{eltype(x)}(undef, row, col)
     @avx for i ∈ 1:row, j ∈ 1:col
-        m[i, j] = 1.0 / (1.0 + exp(-x[i,j]))
+        @inbounds m[i, j] = 1.0 / (1.0 + exp(-x[i,j]))
     end
     return m
 end
