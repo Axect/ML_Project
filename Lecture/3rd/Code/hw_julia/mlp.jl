@@ -1,4 +1,4 @@
-using BenchmarkTools, Zygote
+using BenchmarkTools, Zygote, LoopVectorization
 
 function weights_init(m, n)
     w = rand(m,n)
@@ -11,9 +11,18 @@ end
 
 dsigmoid(x) = sigmoid'(x)
 
+function sigmoid_avx(x::S) where {T <: Number, S <: AbstractMatrix{T}}
+    (row, col) = size(x)
+    m = Matrix{eltype(x)}(undef, row, col)
+    @avx for i ∈ 1:row, j ∈ 1:col
+        m[i, j] = 1.0 / (1.0 + exp(-x[i,j]))
+    end
+    return m
+end
+
 function forward(weight, inputb)
     s = inputb * weight
-    return sigmoid(s)
+    return sigmoid_avx(s)
 end
 
 function add_bias(input, bias)
@@ -31,7 +40,7 @@ function train(w1, w2, input, answer, eta=0.25, times=10000)
     w = w2
     t = answer
     xb = add_bias(x, -1.0)
-    @inbounds @simd for i in 2:times
+    @inbounds for i in 2:times
         a = forward(v, xb)
         ab = add_bias(a, -1.0)
         y = forward(w, ab)
