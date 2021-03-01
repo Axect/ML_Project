@@ -9,13 +9,26 @@ function sigmoid(x)
     return 1.0 ./ (1.0 .+ exp.(-x))
 end
 
-dsigmoid(x) = sigmoid'(x)
+function sigmoid_s(x::T) where T <: Number
+    one(eltype(x)) / (one(eltype(x)) + exp(-x))
+end
+
+#dsigmoid(x) = sigmoid'(x)
 
 function sigmoid_avx(x::S) where {T <: Number, S <: AbstractMatrix{T}}
     (row, col) = size(x)
     m = Matrix{eltype(x)}(undef, row, col)
     @avx for i ∈ 1:row, j ∈ 1:col
-        @inbounds m[i, j] = 1.0 / (1.0 + exp(-x[i,j]))
+        @inbounds m[i, j] = sigmoid_s(x[i,j])
+    end
+    return m
+end
+
+function dsigmoid(x::S) where {T <: Number, S <: AbstractMatrix{T}}
+    (row, col) = size(x)
+    m = Matrix{eltype(x)}(undef, row, col)
+    @avx for i in 1:row, j in 1:col
+        @inbounds m[i,j] = sigmoid_s(x[i,j]) * (one(eltype(x)) - sigmoid_s(x[i,j]))
     end
     return m
 end
@@ -45,8 +58,8 @@ function train(w1, w2, input, answer, eta=0.25, times=10000)
         ab = add_bias(a, -1.0)
         y = forward(w, ab)
         wb = hide_bias(w)
-        d_o = (y - t) .* map(dsigmoid, y)
-        d_h = (d_o * wb') .* map(dsigmoid, a)
+        d_o = (y - t) .* dsigmoid(y)
+        d_h = (d_o * wb') .* dsigmoid(a)
         
         w = w - eta * (ab' * d_o)
         v = v - eta * (xb' * d_h)
