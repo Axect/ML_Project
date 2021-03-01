@@ -18,7 +18,7 @@ fn main() {
 
     println!("{}", t);
     
-    let y = train(v, w, x, t, 0.25, 5000);
+    let y = train(v, w, x, t, 0.25, 20000);
 
     println!("{}", y);
 }
