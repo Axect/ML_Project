@@ -1,4 +1,4 @@
-using BenchmarkTools, LoopVectorization
+using BenchmarkTools, LoopVectorization, Zygote
 #using Zygote
 
 function weights_init(m, n)
@@ -16,7 +16,7 @@ end
 
 #dsigmoid(x) = sigmoid'(x)
 
-function sigmoid_avx(x::Matrix{Float64})
+function sigmoid_avx(x::S) where {T <: Number, S <: AbstractMatrix{T}}
     (row, col) = size(x)
     m = Matrix{eltype(x)}(undef, row, col)
     @avx for i ∈ 1:row, j ∈ 1:col
@@ -25,18 +25,23 @@ function sigmoid_avx(x::Matrix{Float64})
     return m
 end
 
-function dsigmoid(x::Matrix{Float64})
+function dsigmoid(x::S) where {T <: Number, S <: AbstractMatrix{T}}
     (row, col) = size(x)
     m = Matrix{eltype(x)}(undef, row, col)
     @avx for i in 1:row, j in 1:col
-        m[i,j] = sigmoid_s(x[i,j]) * (one(eltype(x)) - sigmoid_s(x[i,j]))
+        #m[i,j] = sigmoid_s(x[i,j]) * (one(eltype(x)) - sigmoid_s(x[i,j]))
+        m[i, j] = ForwardDiff.derivative(sigmoid_s, x[i,j])
     end
     return m
 end
 
+#function dsigmoid(x::S) where {T <: Number, S <: AbstractMatrix{T}}
+#    vmapnt(t -> gradient(sigmoid_s, t)[1], x)
+#end
+
 function forward(weight, inputb)
     s = inputb * weight
-    return sigmoid_avx(s)
+    return sigmoid(s)
 end
 
 function add_bias(input, bias)
@@ -59,10 +64,11 @@ function train(w1, w2, input, answer, eta=0.25, times=20000)
         ab = add_bias(a, -1.0)
         y = forward(w, ab)
         wb = hide_bias(w)
-        yt = y - t;
-        dy = dsigmoid(y);
-        d_o = yt .* dy;
-        d_h = (d_o * wb') .* dsigmoid(a)
+        #yt = y - t;
+        #dy = map(dsigmoid, y);
+        d_o = (y-t) .* dsigmoid(y);
+        #da = map(dsigmoid, a);
+        d_h = (d_o * wb') .* dsigmoid(a);
         
         w = w - eta * (ab' * d_o)
         v = v - eta * (xb' * d_h)
